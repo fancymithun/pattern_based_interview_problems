@@ -24,7 +24,7 @@ class LinkedList{
             fast = fast.next.next
 
             if(slow === fast){
-                return slow
+                return true
             }
         }
 
