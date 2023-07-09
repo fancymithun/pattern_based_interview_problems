@@ -24,6 +24,12 @@ class LinkedList{
         }
     }
 
+    deleteNode(data){
+        if(!this.root) return
+
+        
+    }
+
 }
 
 const ll = new LinkedList()
