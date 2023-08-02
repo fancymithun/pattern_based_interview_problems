@@ -254,4 +254,76 @@ The properties from props object can be accessed directly using destructing feat
 
 In React, both state and props are plain JavaScript objects and used to manage the data of a component, but they are used in different ways and have different characteristics. state is managed by the component itself and can be updated using the setState() function. Unlike props, state can be modified by the component and is used to manage the internal state of the component. Changes in the state trigger a re-render of the component and its children. props (short for "properties") are passed to a component by its parent component and are read-only, meaning that they cannot be modified by the component itself. props can be used to configure the behavior of a component and to pass data between components.
 
-11. ### 
+11. ### Why should we not update the state directly?
+
+If you try to update the state directly then it won't re-render the component.
+
+```js
+
+//Wrong
+this.state.message = "Hello world";
+
+```
+
+```js
+
+//Correct
+this.setState({ message: "Hello World" });
+
+```
+
+12. ### What is the purpose of callback function as an argument of setState()?
+
+The callback function is invoked when setState finished and the component gets rendered. Since setState() is asynchronous the callback function is used for any post action.
+
+Note: It is recommended to use lifecycle method rather than this callback function.
+
+```js
+
+setState({ name: "John" }, () =>
+  console.log("The name has updated and component re-rendered")
+);
+
+```
+
+13. ### What is the difference between HTML and React event handling?
+
+Below are some of the main differences between HTML and React event handling,
+
+In HTML, the event name usually represents in lowercase as a convention:
+
+```js
+
+<button onclick="activateLasers()">Activate</button>
+
+```
+
+Whereas in React it follows camelCase convention:
+
+```js
+
+<button onClick={activateLasers}>Activate</button>
+
+```
+
+In HTML, you can return false to prevent default behavior:
+
+```js
+
+<a
+  href="#"
+  onclick='console.log("The link was clicked."); return false;'
+/>
+
+```
+
+Whereas in React you must call preventDefault() explicitly:
+
+```js
+
+function handleClick(event) {
+  event.preventDefault();
+  console.log("The link was clicked.");
+}
+
+```
