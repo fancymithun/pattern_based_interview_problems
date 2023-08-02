@@ -144,3 +144,95 @@ File System Events
 
 12. ### Describe NPM and its functionality in Node.js
 
+Node Package Manager (NPM) is an online repository of JavaScript libraries that has more than 350,000 packages that can be utilized to build efficient applications and Node.js projects with ease.
+
+It is a command-line utility for accessing an online repository that facilitates inversion and dependency management and package installation. Various features can be searched from this repository here.
+
+Once found you can install it on your client machine by running the command – npm install feature_file. You can use the feature by using require(‘./feature_file’) in JavaScript code.
+
+13. ### Explain REPL with context to Node.js
+
+Here's a simple example of using the Node.js REPL:
+
+Open a terminal or command prompt.
+Type node and press Enter to start the REPL.
+You should see the REPL prompt (>) waiting for your input.
+Type 2 + 3 and press Enter.
+The REPL will evaluate the expression and print the result: 5.
+The REPL goes back to the Read phase, and you can enter more JavaScript code as needed.
+The REPL is a powerful tool for experimenting and learning, and it can be especially helpful when working with Node.js or any JavaScript-related tasks in a development environment.
+
+14. ### Explain Error first callback in Node.js.
+
+```js
+
+var fs = require('fs')
+const file_name = "testfile.txt"
+
+const ErrorFirstCallback = (err,data) => {
+
+  if(err){
+    return console.log(err)
+  }
+
+  console.log("Successful execution of function")
+}
+
+fs.readFile(file,ErrorFirstCallback)
+
+```
+
+15. ### Differentiate spawn() and fork() methods in Node.js.
+
+spawn() is used to launch a new process in Node.js, and it provides more control over the execution of the child process.
+
+```js
+
+const { spawn } = require('child_process');
+const ls = spawn('ls', ['-l', '/usr']);
+
+ls.stdout.on('data', (data) => {
+  console.log(`stdout: ${data}`);
+});
+
+ls.stderr.on('data', (data) => {
+  console.error(`stderr: ${data}`);
+});
+
+ls.on('close', (code) => {
+  console.log(`child process exited with code ${code}`);
+});
+
+
+```
+
+fork() is a special case of spawn() designed specifically for creating child processes that run Node.js modules. It is useful for launching separate Node.js instances to utilize multiple CPU cores efficiently.
+
+```js
+
+const { fork } = require('child_process');
+const child = fork('./child.js');
+
+child.on('message', (message) => {
+  console.log(`Message from child: ${message}`);
+});
+
+child.send('Hello from parent!');
+
+
+```
+
+```js
+
+// child.js
+process.on('message', (message) => {
+  console.log(`Message from parent: ${message}`);
+  process.send('Hello from child!');
+});
+
+```
+
+In summary, spawn() is used for running external commands or executables and communicating through standard streams, while fork() is designed specifically for creating Node.js child processes that can communicate with the parent process through messaging.
+
+16. ### What are differences between process.nextTick() and setImmediate() function?
+
