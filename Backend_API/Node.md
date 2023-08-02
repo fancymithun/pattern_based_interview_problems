@@ -317,3 +317,29 @@ dns.lookup('example.com', options, (err, addresses) =>
 // addresses: [{"address":"2606:2800:220:1:248:1893:25c8:1946","family":6}]
 
 ```
+
+20. ### Use of URL module in Node.js
+
+Uniform Resource Identifier (URL) is composed of various portions such as protocol, host and port, filepath, and filename. URL module of Node.js help split web address (URL) into sections that user can understand.
+
+```js
+
+var myurl = require('url');
+var web_addr ='http://localhost:8080/support/pages/page_one.html?year=2021&amp;month=may';
+var str = myurl.parse(web_addr, true);
+ 
+console.log(str.host); //returns hostname i.e. 'localhost:8080'
+console.log(str.pathname); // returns filepath - i.e. 'support/pages/page_one.html'
+console.log(str.search); // returns '?year=2021&amp;month=may'
+ 
+var datapoint = str.query; // returns an object =&gt; { year : 2021, month : 'may' }
+console.log(datapoint.month); //returns 'may'
+
+
+```
+
+21. ### Explain package.json file of Node.js
+
+package.json is a JSON file present at the root directory of Node.js and contains metadata about projects like description, version, distribution, license, configuration related to end-user of project, and npm. This file identifies the project and handles the dependencies, provides information about project metadata values to npm.
+
+22. ### 
