@@ -236,3 +236,84 @@ In summary, spawn() is used for running external commands or executables and com
 
 16. ### What are differences between process.nextTick() and setImmediate() function?
 
+In summary, while both process.nextTick() and setImmediate() are used to schedule callbacks in Node.js, process.nextTick() has a higher priority and executes callbacks immediately after the current phase, while setImmediate() schedules callbacks to run in the next iteration of the event loop, after I/O events and timers. Additionally, setImmediate() is generally safer for recursive patterns due to its behavior in the event loop.
+
+17. ### What are streams in Node.js?
+
+In Node.js, streams are a fundamental concept used to handle data in a flowing and efficient manner. 
+
+Node.js provides built-in modules like fs (file system), http, and net that use streams for various I/O operations. Additionally, you can create custom streams by extending the stream module classes to fit specific use cases.
+
+```js
+
+const fs = require('fs');
+
+const readableStream = fs.createReadStream('input.txt');
+
+readableStream.on('data', (chunk) => {
+  console.log(chunk.toString());
+});
+
+readableStream.on('end', () => {
+  console.log('Read operation completed.');
+});
+
+
+```
+
+```js
+
+const fs = require('fs');
+
+const writableStream = fs.createWriteStream('output.txt');
+
+writableStream.write('Hello, ');
+writableStream.write('Node.js!');
+writableStream.end();
+
+writableStream.on('finish', () => {
+  console.log('Write operation completed.');
+});
+
+
+```
+
+```js
+
+const net = require('net');
+
+const server = net.createServer((socket) => {
+  socket.pipe(socket); // Echoes back the data received from the client
+});
+
+server.listen(3000, () => {
+  console.log('TCP echo server is listening on port 3000.');
+});
+
+
+```
+
+18. ### How Crypto is used in Node.js?
+
+Crypto module of Node.js contains OpenSSL’s hash, HMAC, cipher, decipher, sign and verify functions. An algorithm created by the crypto module is used for data encryption and decryption, for storing passwords in the database in encrypted form.
+
+19. ### How DNS module is used in Node.js?
+
+```js
+
+const dns = require('node:dns');
+const options = {
+  family: 6,
+  hints: dns.ADDRCONFIG | dns.V4MAPPED,
+};
+dns.lookup('example.com', options, (err, address, family) =>
+  console.log('address: %j family: IPv%s', address, family));
+// address: "2606:2800:220:1:248:1893:25c8:1946" family: IPv6
+
+// When options.all is true, the result will be an Array.
+options.all = true;
+dns.lookup('example.com', options, (err, addresses) =>
+  console.log('addresses: %j', addresses));
+// addresses: [{"address":"2606:2800:220:1:248:1893:25c8:1946","family":6}]
+
+```
