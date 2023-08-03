@@ -342,4 +342,157 @@ console.log(datapoint.month); //returns 'may'
 
 package.json is a JSON file present at the root directory of Node.js and contains metadata about projects like description, version, distribution, license, configuration related to end-user of project, and npm. This file identifies the project and handles the dependencies, provides information about project metadata values to npm.
 
-22. ### 
+22. ### List some of the Node.js libraries often used?
+
+These are as follows:
+
+Express: It is a web framework for node.js
+Socket.io: It is for event-based real-time communication
+Cors: Node.js pack to provide connect/express middleware
+Passport: It is used to authenticate requests with strategies extensible plugins
+Axios: HTTP client who is Promise based for node.js and browser
+Multer: Handles multipart/form-data and file uploads
+Morgan: A Node.js middleware that is an HTTP request logger
+HTTP: errors – It helps to generate HTTP errors for Connect, Koa, and Express
+
+23. ### What is the most suitable database used along with Node.js?
+
+Cassandra, CouchDB, MySQL, MongoDB, Neo4j, Oracle, PostgreSQL, and ElasticSearch are some of the databases used along with Node.js. We can install the connection drivers for these Databases with the command npm install driver_name.
+
+However, MongoDB is more suitable for back-end management with Node.js.
+
+24. ### Explain Buffer class in Node.js with code example
+
+In Node.js, the Buffer class is a built-in class that provides a way to handle binary data efficiently. It is a global object and part of the Node.js core API. Buffers are used to work with raw binary data and are particularly useful for handling network communication, file system operations, and other data-intensive tasks.
+
+Unlike Unicode, JavaScript does not support binary data. To process TCP streams or file systems, it is important to handle octet streams. Buffer class in Node.js offers instances that store raw data and allocate raw memory outside V8 heap.
+
+```js
+
+// Example 1: Creating and Manipulating Buffers
+
+// Creating a Buffer with a string (using 'utf-8' encoding by default)
+const buffer1 = Buffer.from('Hello, Node.js!');
+console.log(buffer1); // <Buffer 48 65 6c 6c 6f 2c 20 4e 6f 64 65 2e 6a 73 21>
+
+// Creating an empty Buffer with a specific size (10 bytes)
+const buffer2 = Buffer.alloc(10);
+console.log(buffer2); // <Buffer 00 00 00 00 00 00 00 00 00 00>
+
+// Writing data to the Buffer
+buffer2.write('Node.js');
+console.log(buffer2); // <Buffer 4e 6f 64 65 2e 6a 73 00 00 00>
+
+// Reading data from the Buffer
+console.log(buffer2.toString()); // 'Node.js'
+
+// Example 2: Concatenating Buffers
+
+const buffer3 = Buffer.from('Hello, ');
+const buffer4 = Buffer.from('Node.js!');
+const concatenatedBuffer = Buffer.concat([buffer3, buffer4]);
+console.log(concatenatedBuffer.toString()); // 'Hello, Node.js!'
+
+```
+
+25. ### How assert is used in Node.js?
+
+Note that the assert module is generally used for simple tests and basic sanity checks. For more comprehensive and complex testing scenarios, you should consider using dedicated testing frameworks like Mocha, Jest, or AVA, which provide more advanced testing features and reporting capabilities.
+
+```js
+
+const assert = require('assert');
+
+// Example 1: Simple Assertion
+function add(a, b) {
+  return a + b;
+}
+
+assert.strictEqual(add(2, 3), 5, 'The sum should be 5.');
+
+// Example 2: Custom Error Message
+const arr = [1, 2, 3, 4, 5];
+assert(arr.length === 5, 'Array length should be 5.');
+
+// Example 3: Deep Equality Check
+const obj1 = { name: 'John', age: 30 };
+const obj2 = { name: 'John', age: 30 };
+assert.deepStrictEqual(obj1, obj2, 'Objects should be deep equal.');
+
+// Example 4: Fail Assertion
+function divide(a, b) {
+  if (b === 0) {
+    throw new Error('Division by zero is not allowed.');
+  }
+  return a / b;
+}
+
+assert.throws(() => divide(10, 0), Error, 'Expected an error.');
+
+
+```
+
+26. ### Describe Timer() module methods in Node.js
+
+Timer module has various methods like setTimeout(), setImmediate(), setInterval().
+
+setTimeout() helps schedule code execution after specified interval in milliseconds.
+
+Syntax:
+
+```js
+
+setTimeout(callback, delay_in_ms, args)
+
+```
+setInterval() helps calling a function at specified interval, once after desired period.
+
+```js
+
+setTimeout()
+
+```
+
+setImmediate() execute code at end of current event loop.
+
+Syntax:
+
+```js
+
+setImmediate(callback, args)
+
+```
+
+27. ### Explain EventEmitter in Node.js with exxample
+
+In Node.js, the EventEmitter is a core class that facilitates communication between different parts of an application using an event-driven programming paradigm. It allows certain objects (known as "emitters") to emit named events, and other objects (known as "listeners" or "subscribers") can listen for and respond to those events. This pattern is widely used for handling asynchronous and decoupled interactions within Node.js applications.
+
+To use the EventEmitter, you first need to create an instance of it and then define event handlers for specific events. You can emit events using the emit() method, and registered event listeners will respond to those events by executing their associated callback functions.
+
+```js
+
+const EventEmitter = require('events');
+
+// Create an instance of EventEmitter
+const eventEmitter = new EventEmitter();
+
+// Define an event handler for the 'greet' event
+eventEmitter.on('greet', (name) => {
+  console.log(`Hello, ${name}!`);
+});
+
+// Define another event handler for the 'greet' event
+eventEmitter.on('greet', (name) => {
+  console.log(`Greetings, ${name}!`);
+});
+
+// Emit the 'greet' event with a parameter
+eventEmitter.emit('greet', 'John');
+
+// output
+
+// Hello, John!
+// Greetings, John!
+
+
+```
