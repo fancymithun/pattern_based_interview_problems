@@ -496,3 +496,20 @@ eventEmitter.emit('greet', 'John');
 
 
 ```
+
+28. ### What is the difference between fs.readFile() and fs.createReadStream() in Node.js?
+
+Node.js uses two ways of reading a file and sending them for execution.
+
+fs.readFile()
+Using file system module, fs.readFile loads entire file you want to manage into the memory, reads entire file before it is sent to client	
+
+fs.CreateReadStream reads entire file in chunks of pieces that we specify
+
+fs.readFile() is useful making advantage for large content and low size disks	
+
+Sending data file with fs.createReadStream() becomes faster.
+
+fs.readFile() is memory intensive for high content data files
+
+fs.createReadStream() is effective in memory efficient way of handling data intensive processing of large data files.
