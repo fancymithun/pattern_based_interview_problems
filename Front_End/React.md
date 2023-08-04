@@ -327,3 +327,578 @@ function handleClick(event) {
 }
 
 ```
+
+14. ### Why does strict mode render twice in React?
+
+StrictMode renders components twice in development mode(not production) in order to detect any problems with your code and warn you about those problems. This is used to detect accidental side effects in the render phase. If you used create-react-app development tool then it automatically enables StrictMode by default.
+
+```js
+
+ReactDOM.render(
+  <React.StrictMode>
+    {App}
+  </React.StrictMode>,
+  document.getElementById('root')
+);
+
+```
+
+If you want to disable this behavior then you can remove strict mode.
+
+```js
+
+ReactDOM.render(
+  {App}, 
+  document.getElementById('root')
+);
+
+```
+
+15. ### What are hooks in react?
+
+Hooks provide a way to use state, lifecycle methods, context, and other React features without the need to write a class. They enable functional components to have their own internal state and to tap into React's lifecycle and features. The most commonly used hooks are useState, useEffect, and useContext, among others.
+
+Here are some commonly used hooks in React:
+
+useState: This hook allows functional components to have local state. It returns a stateful value and a function to update that state.
+
+```jsx
+
+import React, { useState } from 'react';
+
+const Counter = () => {
+  const [count, setCount] = useState(0);
+
+  const handleIncrement = () => {
+    setCount(count + 1);
+  };
+
+  return (
+    <div>
+      <p>Count: {count}</p>
+      <button onClick={handleIncrement}>Increment</button>
+    </div>
+  );
+};
+
+
+```
+
+useEffect: This hook allows functional components to perform side effects like data fetching, subscriptions, or manually changing the DOM. It replaces lifecycle methods like componentDidMount, componentDidUpdate, and componentWillUnmount.
+
+```jsx
+
+import React, { useState, useEffect } from 'react';
+
+const DataFetchingComponent = () => {
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    const response = await fetch('https://api.example.com/data');
+    const data = await response.json();
+    setData(data);
+  };
+
+  return (
+    <div>
+      {data.map((item) => (
+        <p key={item.id}>{item.name}</p>
+      ))}
+    </div>
+  );
+};
+
+
+```
+
+useContext: This hook allows functional components to consume data from a React context. It provides an alternative to using the Consumer in class components.
+
+```jsx
+
+import React, { useContext } from 'react';
+import ThemeContext from './ThemeContext';
+
+const ThemedHeader = () => {
+  const theme = useContext(ThemeContext);
+
+  return (
+    <header style={{ background: theme.background, color: theme.color }}>
+      Themed Header
+    </header>
+  );
+};
+
+
+```
+
+16. ### What is react fiber?
+
+React Fiber is a new engine in React. It is the core implementation core algorithm in React 16.
+
+The main goal of React Fiber is to ensure that there are incremental rendering facilities for the virtual DOM. This increases efficiency when rendering animations, gestures, etc., and also helps in assigning priority to updates based on the requirement, thereby increasing overall efficiency.
+
+React Fiber is an internal implementation detail of React and is not something that developers interact with directly. Instead, it's the foundation on which React's public API and component model are built to provide the benefits of incremental rendering, concurrency, and time-slicing.
+
+```jsx
+
+import React, { useState, useEffect } from 'react';
+
+const Counter = () => {
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      // This update will be executed incrementally by React Fiber
+      setCount((prevCount) => prevCount + 1);
+    }, 1000);
+
+    // Cleanup function for useEffect
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, []);
+
+  return <div>{count}</div>;
+};
+
+```
+
+React Fiber is what enables this kind of declarative, asynchronous, and interruptible updating. When the component mounts, React will start rendering and updating the DOM incrementally in small units of work. It means that while the interval is running and updating the count every second, React can still handle other tasks, like handling user interactions, processing other components' updates, or rendering other parts of the UI concurrently without getting blocked by this interval. This leads to smoother user interactions and a more responsive user interface.
+
+17. ### What are the predefined prop types present in React?
+
+There are five main predefined prop types in React. They are as follows:
+
+PropTypes.bool
+PropTypes.func
+PropTypes.node
+PropTypes.number
+PropTypes.string
+
+```jsx
+
+import PropTypes from 'prop-types'
+
+class User extends React.Component {
+  render() {
+    return (
+      <h1>Welcome, {this.props.name}</h1>
+      <h1>Age, {this.props.age}</h1>
+    )
+  }
+}
+
+User.propTypes = {
+  name: PropTypes.string.isRequired,
+  age: PropTypes.number.isRequired
+}
+
+```
+
+18. ### What is the difference between using getInitialState and constructors in React?
+
+Let's explore the key differences between these two approaches:
+
+getInitialState:
+getInitialState is a special method used in React components that extend React.createClass.
+It is used to define the initial state of the component before it is mounted.
+This method was part of the "classic" React syntax and is not used in modern React applications with functional components or class components created using ES6 classes.
+Here's an example of how getInitialState was used in the older syntax:
+
+```jsx
+
+const MyComponent = React.createClass({
+  getInitialState: function () {
+    return {
+      count: 0
+    }
+  },
+  render : function () {
+    return <div>{this.state.count}</div>
+  }
+})
+
+```
+
+Constructor:
+Constructors are standard JavaScript class features introduced with ES6 classes. They are used to initialize an instance of the class and set up its initial state and other configurations.
+In modern React applications, you'll typically create components as ES6 classes, and the constructor is used to set up the initial state using this.state = {}.
+Here's an example of using a constructor in a modern React class component:
+
+```jsx
+import React, {Component} from 'react'
+
+class MyComponent extends Component {
+  constructor(props){
+    super(props)
+    this.state = {
+      count: 0
+    }
+  }
+
+  render() {
+    return <div>{this.state.count}</div>
+  }
+}
+
+```
+
+The equivalent of getInitialState or constructors in functional components is the useState hook.
+
+
+```jsx
+import React,{UseState} from 'react'
+
+const MyComponent = () => {
+
+  const [count,setCount] = useState(0)
+
+  return (
+    <div>Count: {count}</div>
+  )
+}
+
+```
+
+19. ### Why are props passed to the super() function in React?
+
+In React, when creating a class component using ES6 classes, you need to call the super() function inside the constructor before you can access this.props. This is because super() is responsible for calling the constructor of the parent class (in this case, React.Component), and it needs to be called before you can use this in the constructor.
+
+The props object is a special property in React class components that represents the input data passed to the component from its parent component. When you call super(props) inside the constructor, you are calling the constructor of the parent class (i.e., React.Component) and passing the props object to it. This allows the parent class to set up the component with the provided props and other necessary configurations.
+
+Here's an example of a React class component with a constructor and the super() function to handle props:
+
+```jsx
+
+import React, {Component} from 'react'
+
+class MyComponent extends Component {
+  contructor(props){
+    super(props)
+    this.state = {
+      count: 0
+    }
+  }
+
+  render(){
+    return (
+      <div>{this.props.count}</div>
+    )
+  }
+}
+
+```
+
+In this example, MyComponent is a class component that extends React.Component. When calling super(props) inside the constructor, we are passing the props object to the constructor of React.Component. This allows the base class (React.Component) to handle the props and set up the component appropriately.
+
+20. ### Can you conditionally add attributes to components in React?
+
+Yes, you can conditionally add attributes to components in React. The JSX syntax allows you to dynamically set attributes based on conditions using JavaScript expressions. You can use regular JavaScript constructs like if statements, ternary operators, or logical AND (&&) to conditionally add attributes to components.
+
+Using the ternary operator:
+
+```jsx
+
+const MyComponent = ({isSpecial}) => {
+
+  return (
+    <div>
+      <p>{isSpecial ? "Special Component" : "Regular Component"}</p>
+      <button disabled={isSpecial}></button>
+    </div>
+  )
+}
+
+```
+
+```jsx
+import React from 'react';
+
+const MyComponent = ({ isLoggedIn }) => {
+  return (
+    <div>
+      {isLoggedIn && <p>Welcome, you are logged in!</p>}
+      {/* Additional content */}
+    </div>
+  );
+};
+
+
+```
+
+21. ### What would you do if your React application is rendering slowly?
+
+React.PureComponent:
+React.PureComponent is a class component and should be used when you have a component that primarily depends on its props and doesn't have complex state changes. It provides a shallow comparison of props and state to determine whether the component should re-render. If the props and state haven't changed, the component won't re-render.
+
+```jsx
+
+import React from 'react';
+
+class MyComponent extends React.PureComponent {
+  render() {
+    // Rendering based on this.props and this.state
+    return <div>{this.props.data}</div>;
+  }
+}
+
+```
+
+React.memo:
+React.memo is a higher-order component (HOC) and can be used with functional components. It works similarly to React.PureComponent but for functional components. It prevents re-renders of the functional component if its props have not changed.
+
+```jsx
+import React from 'react';
+
+const MyComponent = React.memo(({ data }) => {
+  // Rendering based on data
+  return <div>{data}</div>;
+});
+
+```
+
+the key difference is that React.PureComponent is used with class components, and React.memo is used with functional components, but both serve a similar purpose: to optimize rendering by avoiding unnecessary re-renders when the props or state haven't changed.
+
+22. ### Why is the StrictMode component used in React?
+
+When you wrap parts of your application with StrictMode, React will perform various checks during development mode to catch potential issues. It helps you write better code and ensures that your application adheres to best practices and future-proof patterns.
+
+Detecting Unsafe Lifecycle Methods and Legacy API Usage:
+StrictMode will issue warnings if you use unsafe lifecycle methods like componentWillReceiveProps, componentWillUpdate, and componentWillMount. These methods are considered legacy and might be deprecated in future versions of React. By using StrictMode, you can identify and update your code to use the latest lifecycle methods or functional components with hooks.
+
+Identifying Deprecated Features:
+If you use any deprecated features or APIs in React, StrictMode will issue warnings, reminding you to update your code to use the latest recommended alternatives.
+
+Detecting Unstable Functions:
+StrictMode will issue warnings if you use unstable functions like findDOMNode, which can lead to potential issues with concurrent rendering and future React versions.
+
+Spotting Potential Side Effects During Render:
+StrictMode helps you identify potential issues where the render phase depends on unexpected side effects, which can lead to subtle bugs.
+
+Detecting Deprecated String Refs:
+If you use string refs (ref="myRef") instead of the recommended callback refs, StrictMode will issue a warning, encouraging you to switch to the modern approach.
+
+```jsx
+import React from 'react';
+import ReactDOM from 'react-dom';
+
+import App from './App';
+
+ReactDOM.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
+  document.getElementById('root')
+);
+
+
+```
+
+
+23. ###  Is there a way to avoid the requirement of binding when using React?
+
+Yes, there are two main ways you can use to avoid the need for binding. They are as follows:
+
+Defining the Event Handler as an Inline Arrow function:
+
+```jsx
+
+class SubmitButton extends React.Component {
+
+  constructor(props){
+    super(props)
+    this.state = {
+      isFormSubmitted = false
+    }
+  }
+
+  render(){
+    return (
+      <button onClick={() => {
+        this.setState({isFormSubmitted : true})
+      }}>Submit</button>
+    )
+  }
+}
+
+```
+
+Using a function component along with Hooks:
+
+```jsx
+
+const SubmitButton = () => {
+
+const [isFormSubmitted, setIsFormSubmitted] = useState(false);
+
+return (
+
+<button onClick={() => {
+
+setIsFormSubmitted(true);
+
+}}>Submit</button>
+
+)
+};
+
+```
+
+24. ### What is the use of the second argument that is passed to setState? Is it optional?
+
+When setState is finished, a callback function is invoked, and the components get re-rendered in React.
+
+Yes, the setState function in programming allows for an optional argument, typically a callback function, since it operates asynchronously. However, it is generally considered best practice to utilize alternative lifecycle methods instead of relying solely on this approach.
+
+```jsx
+import React, {Component} from 'react'
+
+class MyComponent extends Component {
+  state = {
+    count: 0
+  }
+
+  handleClick = () => {
+    this.setState((prevState) => ({count : prevState.count + 1}), () => {
+      console.log("State updated":,this.state.count)
+    })
+  }
+
+
+  render(){
+    return (
+      <div>
+        <p>Count: {this.state.count}</p>
+        <button onClick={this.handleClick}>Increment</button>
+      </div>
+    )
+  }
+}
+
+
+```
+
+25. ### What is the difference between cloneElement and createElement in React?
+
+createElement and cloneElement are both methods in React used for creating and manipulating React elements, but they serve different purposes:
+
+createElement is a method provided by React for creating React elements. It is used to create a new React element with a specified type, props, and children. It's the fundamental method used to create elements in React.
+
+```jsx
+import React from 'react'
+
+const MyComponent = () => {
+  const element = React.createElement('div',{className: 'my-class'},'Hello, World!')
+  return element
+}
+
+```
+
+cloneElement:
+cloneElement is a method provided by React used to clone an existing React element and optionally modify its props or add new children. It's particularly useful when you want to pass down additional props to an element while keeping its original type and children intact.
+
+```jsx
+import React from 'react';
+
+const ParentComponent = () => {
+
+  const element = <div className="child">Hello, Child!</div>
+  const modifiedELement = React.cloneElement(element, {style : { color : 'red'}})
+  return (
+    <div>
+     {element}
+     {modifiedELement}
+    </div>
+  )
+}
+
+```
+
+The key difference is that createElement is used to create a new React element from scratch, while cloneElement is used to clone an existing element and optionally modify its props or add new children
+
+26. ### How can you tell React to build in production mode?
+
+React can be coded to directly build into production by setting the process.env.NODE_ENV variable to production.
+
+Note: When React is in production, warnings, and other development features are not shown.
+
+27. ### Differentiate between a controlled component and an uncontrolled component in React.
+
+A controlled component, as the name suggests, is a component over which React has complete control. It is the singular point of data for the forms.
+
+```jsx
+
+import React, { useState } from 'react';
+
+const ControlledInput = () => {
+  const [inputValue, setInputValue] = useState('');
+
+  const handleChange = (event) => {
+    setInputValue(event.target.value);
+  };
+
+  return (
+    <div>
+      <input type="text" value={inputValue} onChange={handleChange} />
+      <p>Value: {inputValue}</p>
+    </div>
+  );
+};
+
+```
+
+An uncontrolled component is one where the form data gets handled by DOM and not the React component. This is usually done using refs in React.
+
+An uncontrolled component, on the other hand, does not manage its state through React. Instead, it relies on the DOM to manage its state. The component reads its current value from the DOM, and React does not control the value.
+
+```jsx
+import React from 'react';
+
+const UncontrolledInput = () => {
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const inputValue = event.target.elements.myInput.value;
+    console.log('Submitted value:', inputValue);
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <input type="text" name="myInput" defaultValue="Initial Value" />
+      <button type="submit">Submit</button>
+    </form>
+  );
+};
+
+```
+
+In this example, the UncontrolledInput component is uncontrolled because it does not manage the input's state through React. It uses the defaultValue prop of the input element to set the initial value, and when the form is submitted, it reads the current value directly from the DOM using event.target.elements.myInput.value.
+
+28. ### What are the keys in React?
+
+Optimizing List Updates:
+When an element is added, removed, or reordered in a list, React uses the keys to efficiently update the Virtual DOM and determine the minimum number of changes needed. This helps in improving performance, as React can identify which components need to be updated, added, or removed with minimal overhead.
+
+Preserving State and Avoiding Unnecessary Re-Rendering:
+Keys help React maintain component state when re-rendering a list. If a component has a key, React remembers it. When the list is updated, React will preserve the state of components with matching keys, reducing unnecessary re-renders and maintaining any user-interaction or input data.
+
+The keys should be stable, unique, and consistent across re-renders. Using the index of the array as a key is not recommended, as it can lead to performance issues and incorrect behavior, especially when the list order changes.
+
+```jsx
+
+function List({todos}){
+
+  return (
+    <ul>
+      {todos.map((todo,id) => {
+        <li key={id}>{todo}</li>
+      })}
+    </ul>
+  )
+}
+
+```
+
