@@ -620,3 +620,295 @@ class MyClass {
 
 19. ### What is the use of promises in JavaScript?
 
+Any asynchronous operations that occur in JavaScript is handled by promises
+
+There are four stages of promises in JavaScript:
+
+Pending – It acts to be a waiting list neither fulfilled nor rejected. It is the initial state.
+Fulfilled – Any Asynchronous operation is completed to ensure that the promise has been fulfilled.
+Rejected – Asynchronous reason that’s incomplete ensures that the promise has been rejected.
+Settled – This is a neutral state where the promise is neither rejected nor fulfilled.
+
+```js
+
+function simulateAPICall(){
+  return new Promise((resolve,reject) => {
+    setTimeout(() => 
+      const randomNumber = Math.random()
+      if(randomNumber > 0.5){
+        resolve(randomNumber)
+      }else{
+        reject(new Error('Failed to fetch data'))
+      }
+    ,1000)
+  })
+}
+
+simulateAPICall().then((result) => {
+  console.log('Rsolved:'result)
+}).catch((error) => {
+  console.error('Error',error.message)
+})
+
+```
+Promises make it easier to reason about and handle asynchronous code, as they allow you to chain multiple asynchronous operations together and handle the results or errors in a more sequential and structured manner. They offer a cleaner alternative to nested callbacks, leading to more maintainable and readable code.
+
+20. ### What are the rest parameter and spread operators?
+
+1. **Rest Parameter (Rest Operator)**:
+   The rest parameter is like a magic bag that you can use to collect lots of balls and put them into your toy box at once. Imagine you have many balls, and you don't know how many exactly. The magic bag (rest parameter) helps you gather all the balls and put them in your toy box (function) as a group.
+
+   Example:
+   You have 3 balls: red, blue, and green. The rest parameter helps you gather them all:
+
+   ```javascript
+   function putBallsInBox(...balls) {
+     console.log(balls); // Output: ['red', 'blue', 'green']
+   }
+
+   putBallsInBox('red', 'blue', 'green');
+   ```
+
+2. **Spread Operator**:
+   The spread operator is like a magical hand that helps you take out all the balls from your toy box and put them on the playground (array or object). It helps you spread the balls out individually so you can see each one separately.
+
+   Example with arrays:
+   You have two groups of balls, and the spread operator helps you combine them into one big group:
+
+   ```javascript
+   const group1 = ['red', 'blue'];
+   const group2 = ['green', 'yellow'];
+
+   const allBalls = [...group1, ...group2];
+   console.log(allBalls); // Output: ['red', 'blue', 'green', 'yellow']
+   ```
+
+   Example with objects:
+   You have two sets of information about yourself, and the spread operator helps you merge them into one complete set:
+
+   ```javascript
+   const personalInfo = { name: 'John', age: 10 };
+   const extraInfo = { hobbies: ['soccer', 'drawing'] };
+
+   const completeInfo = { ...personalInfo, ...extraInfo };
+   console.log(completeInfo);
+   // Output: { name: 'John', age: 10, hobbies: ['soccer', 'drawing'] }
+   ```
+
+So, the rest parameter helps you collect lots of balls into a group (array), and the spread operator helps you take out the balls from the group and put them separately on the playground (array or object). Both the rest parameter and the spread operator are magical tools that make working with lots of toys (data) in your toy box (function) much easier!
+
+21. ### Differences between declaring variables using var, let and const.
+
+```js
+In JavaScript, `var`, `let`, and `const` are used to declare variables, but they have some important differences in terms of scoping, hoisting, and reassignment. Let's look at the differences between them:
+
+1. **Scoping**:
+   - `var`: Variables declared with `var` have function scope. This means that they are accessible throughout the entire function in which they are declared, even if they are declared inside loops or conditional statements.
+   - `let`: Variables declared with `let` have block scope. This means that they are only accessible within the block (curly braces) in which they are declared. If declared inside a loop or conditional statement, they are limited to that block only.
+   - `const`: Like `let`, variables declared with `const` also have block scope. However, `const` variables cannot be reassigned after declaration. They are read-only.
+
+2. **Hoisting**:
+   - `var`: Variables declared with `var` are hoisted to the top of their function or global scope. They are initialized with `undefined` during the hoisting phase, and their assignment is done at the point where they are declared in the code.
+   - `let` and `const`: Variables declared with `let` and `const` are also hoisted, but they are not initialized during the hoisting phase. They are placed in a "Temporal Dead Zone" (TDZ) until the line where they are declared, and any attempt to access them before that line results in a `ReferenceError`.
+
+3. **Reassignment**:
+   - `var`: Variables declared with `var` can be reassigned to new values and types at any point in the code, even within the same scope.
+   - `let`: Variables declared with `let` can be reassigned to new values, but they cannot be redeclared within the same scope.
+   - `const`: Variables declared with `const` cannot be reassigned or redeclared. They are constant and their values cannot change once they are assigned.
+
+Examples:
+
+```javascript
+function example() {
+  console.log(x); // Output: undefined (due to hoisting)
+  var x = 10;
+  console.log(x); // Output: 10
+}
+
+function anotherExample() {
+  console.log(y); // Output: ReferenceError: Cannot access 'y' before initialization
+  let y = 20;
+  console.log(y); // Output: 20
+}
+
+const z = 30;
+z = 40; // TypeError: Assignment to constant variable.
+```
+
+In the first example, the `var` variable `x` is hoisted, so it is accessible before its declaration, but it is initialized with `undefined`. In the second example, the `let` variable `y` is also hoisted but remains in the TDZ until its declaration. Attempting to access it before that line results in a `ReferenceError`. In the third example, the `const` variable `z` cannot be reassigned, so trying to assign a new value to it results in a `TypeError`.
+
+In modern JavaScript, it is recommended to use `let` and `const` over `var` to take advantage of block scoping and to avoid some common issues associated with hoisting and redeclaration. Use `const` for variables that should not be reassigned, and use `let` for variables that may change their values during the program's execution.
+
+22. ### What are arrow functions?
+
+Arrow functions are a concise and shorthand way to write functions in JavaScript. They were introduced in ECMAScript 6 (ES6) and provide a more compact syntax for creating functions compared to the traditional `function` syntax.
+
+The syntax for arrow functions looks like this:
+
+```javascript
+const myArrowFunction = (parameters) => {
+  // Function body
+  return // return value;
+};
+```
+
+Here are some key points about arrow functions:
+
+1. **No `function` Keyword**: Arrow functions don't use the `function` keyword. Instead, they start with a set of parentheses `()` that contain the function's parameters (if any), followed by an arrow `=>`, and then the function body enclosed in curly braces `{}`.
+
+2. **Shorter Function Syntax**: Arrow functions are often used for short, one-liner functions or for functions that have a single statement in the body. When the function body is just a single expression, you can omit the curly braces `{}` and the `return` keyword, and the value of the expression will be automatically returned.
+
+3. **Lexical `this`**: One of the most significant differences between arrow functions and regular functions is how they handle the `this` keyword. In arrow functions, the value of `this` is lexically (statically) determined, meaning it is taken from the surrounding scope where the arrow function is defined. In contrast, regular functions have their own `this` value, which can change depending on how the function is called.
+
+Here are some examples of arrow functions:
+
+```javascript
+// Regular function
+function add(a, b) {
+  return a + b;
+}
+
+// Arrow function (with explicit return)
+const multiply = (a, b) => {
+  return a * b;
+};
+
+// Arrow function (shorter syntax with implicit return)
+const subtract = (a, b) => a - b;
+
+// Arrow function with no parameters
+const sayHello = () => {
+  console.log('Hello!');
+};
+```
+
+Arrow functions are especially useful when working with higher-order functions, array methods like `map`, `filter`, and `reduce`, and in situations where you want to preserve the value of `this` from the surrounding context. However, it's important to be aware of the difference in how `this` behaves in arrow functions compared to regular functions, as it can lead to unexpected behavior if not used correctly.
+
+23. ### What is the use of a constructor function in JavaScript?
+
+Constructor functions in JavaScript are used to create and initialize objects. They act as blueprints for creating new instances of objects with similar properties and methods.
+
+```js
+
+class Person(name,age){
+  constructor(name,age){
+    this.name = name
+    this.age = age
+  }
+}
+
+const person1 = new Person("Mithun",25)
+const person2 = new Person("Prabhu",26)
+
+console.log("Person1:", person1 )
+console.log("Person2:", person2 )
+
+```
+
+
+ A function that creates an instance of a class which is called an object is known as a constructor. Whenever the object is using a new keyword then the constructor gets called. Constructor is used to creating an object and set values if there are any object properties present.
+
+```js
+function Person(name,age){
+  this.name = name
+  this.age = age
+  this.sayHello = function(){
+    console.log(`Hello, My name is ${this.name} and I am ${this.age} year old`)
+  }
+}
+
+const person1 = new Person("Mithun",25)
+const person2 = new Person("Prabhu",26)
+
+person1.sayHello()
+person2.sayHello()
+```
+
+24. ### What is recursion in a programming language?
+
+Recursion is a technique in which the function calls itself again and again repeatedly until the condition gets false. 
+
+```js
+function counter(number){
+  console.log(number)
+
+  const newNumber = number - 1
+
+  if(number > 0){
+      counter(newNumber)
+  }
+
+}
+
+counter(5)
+
+```
+
+25. ### What is memoization?
+
+The optimization technique which speeds up the applications by storing the results needed to an immediate function calls and returning to the cached result when the same inputs are supplied again is known as memorization
+
+```js
+function fibonaaci(n, memo = {}){
+  if(n <= 1){
+    return n
+  }
+
+  if(memo[n]){
+    return memo[n]
+  }
+
+  memo[n] = fibonacci(n-1,memo) + fibonacci(n-2,memo)
+
+  return memo[n]
+}
+
+```
+
+26. ### What are callbacks? 
+
+A callback is a function passed as an argument to another function. It acts as a sequencing system for function execution. Once the function is been executed using call back, we can wait for the result and then execute the next function in the sequence. 
+
+```js
+
+function doSomethingAsync(callback){
+
+  setTimeout(() => {
+    let result = "Data from server"
+    return callback(result)
+  },1000)
+}
+
+function processedResult(value){
+  console.log("Processing",value)
+}
+
+doSomethingAsync(processedResult)
+
+```
+
+27. ### What are object prototypes?
+
+
+In JavaScript, every object has a hidden property called the prototype, which is an object itself. The prototype object contains properties and methods that are shared among all instances of that object type. 
+
+When you access a property or method on an object, and it doesn't exist on the object itself, JavaScript looks for it in the prototype chain, which is a chain of prototype objects linked together.
+
+```js
+
+function Person(name,age){
+  this.name = name
+  this.age = age
+}
+
+Person.prototype.sayHello = function(){
+  console.log(`Hi ${this.name}  your age is ${this.age} right?` )
+}
+
+const person1 = new Person("Mithun",25)
+const person2 = new Person("Prabhu",27)
+
+person1.sayHello()
+person2.sayHello()
+
+```
