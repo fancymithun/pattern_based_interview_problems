@@ -298,3 +298,325 @@ greetFunction(); // Output: Hello, Alice
 
 ```
 
+10. ### What is Currying in JavaScript?
+
+Currying is a functional programming concept in JavaScript where a function is transformed into a series of functions, each taking a single argument. The curried function returns a new function for each argument until all the arguments are supplied, and then the final result is returned.
+
+```js
+
+// Regular function without currying
+function add(a, b, c) {
+  return a + b + c;
+}
+
+console.log(add(2, 3, 4)); // Output: 9
+
+// Curried function
+function curriedAdd(a) {
+  return function (b) {
+    return function (c) {
+      return a + b + c;
+    };
+  };
+}
+
+console.log(curriedAdd(2)(3)(4)); // Output: 9
+
+```
+
+When calling curriedAdd(2)(3)(4), it first passes 2 as a, returning a new function that expects b. Then, it passes 3 as b, returning a third function that expects c. Finally, it passes 4 as c, and the sum 2 + 3 + 4 is computed, resulting in 9.
+
+11. ### Explain Scope and Scope Chain in JavaScript.
+
+In JavaScript, scope refers to the accessibility and visibility of variables, functions, and objects in different parts of the code during runtime. The scope determines where a variable or function is accessible and can be referenced. Understanding scope is crucial for managing variable lifetimes and avoiding conflicts between variables with the same name.
+
+JavaScript has two main types of scope:
+
+1. **Global Scope**:
+   Variables declared outside any function or block have global scope. These variables are accessible from anywhere in the code, including inside functions or blocks. Global scope variables are attached to the global object (`window` in browsers and `global` in Node.js).
+
+   Example:
+
+   ```javascript
+   // Global scope variable
+   var globalVar = 'I am global';
+
+   function exampleFunction() {
+     console.log(globalVar); // Output: I am global
+   }
+
+   exampleFunction();
+   ```
+
+2. **Local Scope**:
+   Variables declared inside a function or block have local scope. These variables are accessible only within the function or block where they are declared. Local scope variables take precedence over global scope variables with the same name.
+
+   Example:
+
+   ```javascript
+   function exampleFunction() {
+     // Local scope variable
+     var localVar = 'I am local';
+     console.log(localVar); // Output: I am local
+   }
+
+   exampleFunction();
+   // console.log(localVar); // Error: localVar is not defined (outside the function)
+   ```
+
+   In this example, `localVar` is accessible only within the `exampleFunction`.
+
+**Scope Chain**:
+The scope chain is a mechanism in JavaScript that determines how variables are accessed and resolved when they are referenced. When a variable is accessed, the JavaScript engine searches for the variable in the current scope. If it doesn't find the variable, it looks up the scope chain to find the variable in the next outer scope, continuing until it reaches the global scope.
+
+Example:
+
+```javascript
+var globalVar = "global variable"
+
+function outerFunction(){
+
+    var outerVar = "Outer variable"
+
+    function innerFunction(){
+        var innerVar = "Inner variable"
+        console.log(innerVar) // accessed from inner score function scope
+        console.log(outerVar) // accessed from outer scope outer function
+        console.log(globalVar) // accessed from global scope 
+    }()
+}
+
+outerFunction()
+
+```
+
+In this example, `innerFunction` has access to variables from the outer scopes (global scope and `outerFunction` scope). When `console.log(globalVar)` is executed, the engine first looks for `globalVar` in the local scope of `innerFunction`, then in the scope of `outerFunction`, and finally finds it in the global scope.
+
+Understanding scope and the scope chain is essential for writing clean and maintainable JavaScript code, avoiding variable name collisions, and managing variable lifetimes effectively. It allows developers to control the visibility and accessibility of variables throughout their programs.
+
+12. ### What are built-in methods in JavaScript
+
+Number Methods
+constructor() returns the function that’s created by default
+toExponential() Numbers will be displayed in exponential notation 
+toFixed() used to fix how many numbers should be present to the right of the decimal point.
+toLocaleString() used to return the correct value of the number according to the settings of the system
+toString() Returns the string representation
+
+Boolean Methods:
+toString() returns true or false according to the condition 
+
+String Methods:
+toUpperCase() converts string to upper case 
+toLowerCase() converts string to lower case
+split() Separates strings into two.
+slice() a new string is returned after cutting out certain elements of a string
+length() Returns string length
+concat()Combines  two different strings together
+charAt() : returns the character at the specific index
+ndexOf()Returns the index of the string if not found will return -1
+
+13. ### What is a Temporal Dead Zone?
+
+The Temporal Dead Zone (TDZ) is a behavior in JavaScript that occurs when variables declared with `let` and `const` are not accessible (i.e., not in scope) before their declaration within the current block. The TDZ exists from the start of the block until the point of declaration, and during this period, any attempt to access the variable results in a `ReferenceError`.
+
+Let's illustrate the Temporal Dead Zone with an example:
+
+```javascript
+console.log(myVar); // Output: ReferenceError: Cannot access 'myVar' before initialization
+let myVar = 10;
+```
+
+In this example, we attempted to access the variable `myVar` before its declaration, resulting in a `ReferenceError` due to the Temporal Dead Zone. The TDZ for `myVar` exists from the start of the block (the beginning of the scope) until the line where it is declared with `let`.
+
+The Temporal Dead Zone behavior is a result of how variables declared with `let` and `const` are hoisted to the top of their scope during the "creation phase" of the code execution. However, unlike variables declared with `var`, they are not initialized at that point. They remain in an uninitialized state within the TDZ until the line of declaration is reached during the "execution phase."
+
+Example of TDZ:
+
+```javascript
+function example() {
+  console.log(myVar); // Output: ReferenceError: Cannot access 'myVar' before initialization
+  let myVar = 10;
+}
+
+example();
+```
+
+In this example, the TDZ exists within the function `example` from the start of the function until the line of declaration for `myVar`.
+
+It's essential to be aware of the Temporal Dead Zone in JavaScript, as accessing variables within the TDZ can lead to unexpected runtime errors. To avoid these errors, it is a good practice to declare variables with `let` and `const` as close to their usage as possible, at the beginning of their respective blocks.
+anotherRandomFunc();
+
+14. ### What is Object Destructuring?
+
+Object destructuring is a feature in JavaScript that allows you to extract properties from objects and assign them to variables in a more concise and convenient way. It provides a simple syntax to "destructure" the properties of an object into individual variables, making it easier to work with objects and access their properties.
+
+The syntax for object destructuring uses curly braces `{}` on the left-hand side of an assignment, with variable names that match the property names in the object.
+
+Here's how object destructuring works:
+
+```javascript
+// Example object
+const person = {
+  firstName: 'John',
+  lastName: 'Doe',
+  age: 30,
+};
+
+// Object destructuring
+const { firstName, lastName, age } = person;
+
+console.log(firstName); // Output: John
+console.log(lastName);  // Output: Doe
+console.log(age);       // Output: 30
+```
+
+In this example, we have an object `person` with properties `firstName`, `lastName`, and `age`. Using object destructuring, we extract the values of these properties into individual variables with the same names (`firstName`, `lastName`, and `age`).
+
+Object destructuring also allows you to specify default values for variables in case the corresponding property is undefined in the object:
+
+```javascript
+const person = {
+  firstName: 'John',
+};
+
+const { firstName, lastName = 'Doe' } = person;
+
+console.log(firstName); // Output: John
+console.log(lastName);  // Output: Doe (default value)
+```
+
+If the `lastName` property is not present in the `person` object, the variable `lastName` will take the default value `'Doe'`.
+
+Object destructuring is especially useful when working with functions that accept objects as parameters. It enables you to easily extract specific properties from the object inside the function without having to reference the object's properties directly.
+
+Example with function:
+
+```javascript
+function greetPerson({ firstName, lastName }) {
+  console.log(`Hello, ${firstName} ${lastName}`);
+}
+
+const person = {
+  firstName: 'John',
+  lastName: 'Doe',
+};
+
+greetPerson(person); // Output: Hello, John Doe
+```
+
+In this example, the `greetPerson` function uses object destructuring in its parameter to directly extract the `firstName` and `lastName` properties from the `person` object passed as an argument.
+
+Overall, object destructuring is a powerful feature in JavaScript that simplifies working with objects and enhances code readability by extracting properties from objects into individual variables with a concise syntax.
+
+15. ### Explain WeakMap in JavaScript.
+
+A WeakMap is a built-in object in JavaScript that provides a collection for storing key-value pairs, where the keys must be objects and the values can be any data type. It is similar to a regular Map, but with some important differences, especially in how it handles object references and memory management.
+
+```js
+
+let person1 = { name: 'Alice' };
+let person2 = { name: 'Bob' };
+
+const weakMap = new WeakMap();
+weakMap.set(person1, 'Personal info for Alice');
+weakMap.set(person2, 'Personal info for Bob');
+
+console.log(weakMap.get(person1)); // Output: Personal info for Alice
+
+person1 = null; // The reference to person1 is removed
+
+// At this point, 'Personal info for Alice' will be eligible for garbage collection
+// and will be automatically removed from the WeakMap
+
+```
+
+The regular box is like a Map in JavaScript. It can store any kind of data (toys), and the data stays there forever, no matter if you use it or not.
+
+The magical box is like a WeakMap in JavaScript. It can only store objects as keys, and if there are no other references to those objects (if nobody is playing with the toy anymore), the WeakMap will make the data disappear to save memory.
+
+16. ###  Explain WeakSet in JavaScript.
+```js
+const newSet = new Set([4, 5, 6, 7]);
+
+console.log(newSet);// Outputs Set {4,5,6,7}
+
+const newSet2 = new WeakSet([3, 4, 5]); //Throws an error
+
+let obj1 = {message:”Hello world”};
+
+const newSet3 = new WeakSet([obj1]);
+
+console.log(newSet3.has(obj1)); // true
+
+```
+The error you encountered is because WeakSet can only store objects as its elements, not primitive values like numbers or strings. When you try to create a WeakSet with primitive values like [3, 4, 5], it will throw a TypeError.
+
+To create a WeakSet with primitive values, you need to wrap them inside objects. Here's one way to do it:
+
+```js
+const newSet2 = new WeakSet([{ value: 3 }, { value: 4 }, { value: 5 }]);
+
+```
+
+17. ###  What are generator functions?
+
+Generator functions are a special type of function in JavaScript that allows you to generate a sequence of values using a special syntax. Unlike regular functions, generator functions can be paused and resumed during their execution. When paused, they can yield a value to the caller and later be resumed from where they left off. This unique behavior makes generator functions very powerful for working with sequences, asynchronous operations, and handling large sets of data.
+
+The syntax for defining a generator function uses an asterisk (*) after the function keyword:
+
+```js
+function* myGeneratorFunction() {
+  // Generator function body
+  yield 1;
+  yield 2;
+  yield 3;
+}
+
+```
+
+```js
+function* generateEvenNumbers() {
+  let num = 0;
+  while (true) {
+    yield num;
+    num += 2;
+  }
+}
+
+const evenNumbersGenerator = generateEvenNumbers();
+
+console.log(evenNumbersGenerator.next().value); // Output: 0
+console.log(evenNumbersGenerator.next().value); // Output: 2
+console.log(evenNumbersGenerator.next().value); // Output: 4
+// and so on...
+
+```
+
+18. ### What are classes in JavaScript?
+
+
+In JavaScript, classes are a way to define blueprints for creating objects with shared properties and methods. They provide a convenient and more structured syntax for creating objects that share similar characteristics. Classes in JavaScript are introduced in ECMAScript 6 (ES6) and offer a more familiar object-oriented programming style for developers coming from other programming languages like Java or Python.
+
+The syntax for defining a class in JavaScript is as follows:
+
+```js
+class MyClass {
+  constructor(prop1, prop2) {
+    this.prop1 = prop1;
+    this.prop2 = prop2;
+  }
+
+  method1() {
+    // Method definition
+  }
+
+  method2() {
+    // Method definition
+  }
+}
+
+```
+
+19. ### What is the use of promises in JavaScript?
+
