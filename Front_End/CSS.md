@@ -1198,3 +1198,283 @@ Custom properties (sometimes referred to as CSS variables or cascading variables
 }
 
 ```
+
+45. ### How is the nth-child() different from nth of type selectors?
+
+Both are pseudo-classes (Pseudo-classes are those keywords that specifies the special state of the selected element). The nth-child() pseudo-class is used for matching elements based on the number that represents the position of an element based on the siblings. The number is used to match an element on the basis of the element’s position amongst its siblings.
+
+For example, in the below piece of code, if we give nth-child(4) for the example class, then the 4th child of the example class is selected irrespective of the element type. Here, the fourth child of the example class is the div element. The element is selected and a background of black is added to it.
+
+```html
+
+.example:nth-child(4) {   
+    background: black; 
+}
+<div class="example">
+	<p>This is a paragraph.</p>
+	<p>This is a paragraph.</p>
+	<p>This is a paragraph.</p>
+	<div>This is a div.</div> <!-- 4th Element to select and apply style-->
+	<div>This is a div.</div> 
+	<p>This is a paragraph.</p>
+	<p>This is a paragraph.</p>
+	<div>This is a div.</div>
+</div>
+
+```
+
+The nth-of-type() pseudo-class is similar to the nth-child but it helps in matching the selector based on a number that represents the position of the element within the elements that are the siblings of its same type. The number can also be given as a function or give keywords like odd or even.
+
+For example, in the below piece of code, if we give p:nth-of-type(even) for the example class, then all the even paragraph tags are selected within the example class and the style of background black is applied to them. The selected elements are marked in comments in the below code:
+
+```html
+
+.example p:nth-of-type(even) { 
+    background: black; 
+}
+<div class="example">
+	<p>This is a paragraph.</p> 
+	<p>This is a paragraph.</p> <!-- Select this and apply style-->
+	<p>This is a paragraph.</p> 
+	<div>This is a div.</div>
+	<div>This is a div.</div> 
+	<p>This is a paragraph.</p> <!-- Select this and apply style-->
+	<p>This is a paragraph.</p> 
+	<div>This is a div.</div>
+	<p>This is a paragraph.</p> <!-- Select this and apply style-->
+	<div>This is a div.</div>
+</div>
+
+```
+
+46. ###  What do you have to do to automatically number the heading values of sections and categories?
+
+We can use the concept of CSS counters. This lets us adjust the appearance of the content based on the location in a document. While using this, we need to first initialize the value of the counter-reset property which is 0 by default. The same property is also used for changing the value to any number that we need. Post initialization, the counter’s value can be incremented or decremented by using the counter-increment property. The name of the counter cannot be CSS keywords like “none”, “initial”, “inherit” etc. If the CSS keywords are used, then the declaration would be ignored.
+
+Consider an example as shown below:
+
+```css
+body {
+  counter-reset: header;   /* define counter named 'header' whose initial value is 0 by default */
+}
+
+h2::before {
+  counter-increment: header;   /* The value of header counter by 1.*/
+  content: "Header " counter(header) ": ";  /* To display word Header and the value of the counter with colon before it.*/
+}
+
+```
+
+47. ### How is margin different from padding in CSS?
+
+Margin property using which we can create space around the elements. We can also create space for borders defined at the exteriors. We have the following properties for defining the margin:
+
+margin-top
+margin-right
+margin-bottom
+margin-left
+margin property by itself has the values as:
+auto – The browser auto-calculates the margin while we use this.
+length – The value of this property can be in px, pt, cm, em etc. The values can be positive or negative.
+% – We can also give percentage value as margin to the element.
+inherit – Using this property, the margin properties can be inherited from the parent elements.
+The padding property is used for generating the space around the element’s content and inside any known border. The padding also has sub-properties like:
+
+padding-top
+padding-right
+padding-bottom
+padding-left
+It is to be noted that the padding does not allow negative values.
+
+From the below image, we can see that the Margin is the outermost entity of the CSS Box Model that lies outside of the borders whereas the padding lies within the borders.
+
+48. ### How will you align content inside the p tag at the exact center inside the div?
+
+We can add the text-align: center property inside the parent div for aligning the contents horizontally. But it will not align the contents vertically. We can align the content vertically by making the parent element have relative positioning and the child element have absolute positioning. The child element should have the values of top, bottom, right, left as 0 to center it in the middle vertically. Then we need to set the margin as auto. It is assumed that both the child and mother elements will have height and width values.
+
+Consider we have a div element of height and width taking 20% of the screen size, and we have a paragraph element taking the height of 1.2em and width of 20%. If we want to align the paragraph element at the center (vertically and horizontally), we write the following styles:
+
+```css
+
+div {
+    position : relative;  // Make position relative
+    height : 20%;
+    width : 20%;
+    text-align : center; //Align to center horizontally
+}
+p {
+    position : absolute; // Make position absolute
+    top:0;                // Give values of top, bottom,left, right to 0
+    bottom:0;
+    left:0;
+    right:0;
+    margin : auto;        // Set margin as auto
+    height : 1.2 em;
+    width : 20%;
+}
+
+```
+
+49. ### How does this property work overflow: hidden?
+
+The overflow property in CSS is used for specifying whether the content has to be clipped or the scrollbars have to be added to the content area when the content size exceeds the specified container size where the content is enclosed. If the value of overflow is hidden, the content gets clipped post the size of the container thereby making the content invisible. For example,
+
+```css
+
+div {
+    width: 150px;
+    height: 50px;
+    overflow: hidden;
+}
+```
+
+If the content of the div is very large and exceeds the height of 50px, the content gets clipped post 50px and the rest of the content is not made visible.
+
+50. ###  How does the absolute positioning work?
+
+Absolute positioning is a very powerful positioning mechanism that allows users to place any element wherever they want in an exact location. The CSS properties right, left, top, bottom and define the exact locations where you need to place the element. In absolute positioning, the following points need to be considered:
+
+The element to which the absolute positioning is applied is removed from the normal workflow of the HTML document.
+The HTML layout does not create any space for that element in its page layout.
+The element is positioned relative to the closest positioned ancestor. If no such ancestor is present, then the element is placed relative to the initial container block.
+The final position of the element is determined based on values provided to the top, right, left, bottom.
+
+51. ### How to determine if the browser supports a certain feature?
+
+The @support in CSS can be very useful to scan if the current browser has support for a certain feature.
+
+```css
+@supports (display: grid) {
+	div {
+		display: grid;
+	}
+}
+
+```
+
+```js
+
+if (CSS.supports('display', 'grid')) {
+  // CSS Grid Layout is supported, use grid layout
+} else {
+  // Fallback for browsers that don't support CSS Grid
+}
+
+```
+
+52. ### Does style1.css have to be downloaded and parsed before style2.css can be fetched?
+
+```html
+
+<head>
+	<link h ref=" stylel. css" rel=" stylesheet">
+	<link href="style2.css" rel="stylesheet">
+</head>
+
+```
+
+No, the browsers will download the CSS in the order of its appearance on the HTML page.
+
+53. ### What are the advantages of using translate() instead of absolute position?
+
+Using `translate()` instead of `absolute` positioning in CSS offers several advantages, especially when it comes to creating smooth animations and transitions. Here are some of the key benefits:
+
+1. **Performance and Hardware Acceleration**:
+   - `translate()` is often hardware accelerated by the browser, which means it can be computed by the GPU rather than the CPU. This can result in smoother animations and improved performance, especially on mobile devices or when dealing with complex animations.
+
+2. **No Repainting and Reflow**:
+   - When using `translate()`, the element's original layout space remains reserved, and the element is visually moved without triggering expensive layout calculations (reflow) or repainting of the whole page. This can lead to better performance and smoother animations compared to `absolute` positioning, which can cause reflows and repaints.
+
+3. **Better Responsiveness**:
+   - Elements positioned using `translate()` respond better to changes in the layout or container size. As `translate()` is relative to the element's original position, the element will adjust accordingly when the container size changes, leading to a more responsive design.
+
+4. **Easier to Animate and Transition**:
+   - `translate()` is specifically designed for animations and transitions, making it easier to create smooth and fluid animations without janky movements. It is well-supported by CSS animation and transition properties, allowing you to control the speed and easing of the animation.
+
+5. **Preserves Document Flow**:
+   - When using `absolute` positioning, the positioned element is taken out of the document flow, which can affect the positioning of other elements. On the other hand, `translate()` does not affect the document flow, making it more suitable for dynamic layouts.
+
+6. **Accessibility Considerations**:
+   - Elements positioned with `translate()` may behave better with assistive technologies and screen readers since they remain in the document flow. This can improve accessibility compared to using `absolute` positioning, which can be more challenging to navigate for users with disabilities.
+
+While `translate()` has many advantages over `absolute` positioning, there are cases where using `absolute` positioning may still be appropriate, such as when you need to position an element relative to its nearest positioned ancestor or the viewport. In general, the choice between `translate()` and `absolute` positioning depends on the specific use case and the desired behavior of the elements in the layout.
+
+From the line "computed by the GPU rather than the CPU," we can take out the following key points:
+
+1. **Hardware Acceleration**: The `translate()` function is often hardware accelerated by the browser, which means it takes advantage of the GPU (Graphics Processing Unit) to perform the calculations. This hardware acceleration allows the movement and animation of elements to be handled more efficiently, leading to smoother performance, especially for complex animations or when dealing with large numbers of elements.
+
+2. **GPU Computation**: The GPU is specifically designed to handle graphical and computational tasks related to graphics and animations. By using `translate()` with hardware acceleration, the element's movement is offloaded to the GPU, freeing up the CPU (Central Processing Unit) to focus on other tasks and improving overall performance.
+
+3. **Smooth Animations**: The GPU's ability to parallel process graphics operations allows for smoother animations and transitions. When animations are computed by the GPU, they can be updated and rendered at a higher frame rate, resulting in more fluid and visually pleasing animations.
+
+Overall, leveraging hardware acceleration through `translate()` can significantly enhance the visual experience of web animations, reduce jank and stuttering, and lead to a more responsive and enjoyable user experience. It is one of the reasons why `translate()` is often preferred over other positioning methods when creating animations and transitions in web development.
+
+54. ### What is progressive rendering? How do you implement progressive rendering in the website?. What are the advantages of it?
+
+Progressive rendering is the name given to techniques used to improve the performance of a webpage (in particular, improve perceived load time) to render content for display as quickly as possible.
+
+We can implement the progressive rendering of the page by loading the lazy loading of the images.  We can use Intersection Observer API to lazy load the image. The API makes it simple to detect when an element enters the viewport and take an action when it does. Once the image enters the viewport, we will start loading the images.
+
+Sure! Here's an example of how you can implement progressive rendering using vanilla JavaScript:
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Progressive Rendering Example</title>
+  <!-- Load critical CSS first -->
+  <link rel="stylesheet" href="critical.css">
+</head>
+<body>
+  <h1>Loading Content Progressively</h1>
+  
+  <!-- Display some important content first -->
+  <p>This is the above-the-fold content. It should be visible immediately.</p>
+  
+  <!-- Load non-critical scripts asynchronously or defer their loading -->
+  <script async src="non_critical_script.js"></script>
+  
+  <!-- Lazy load images -->
+  <img src="placeholder.jpg" data-src="image1.jpg" alt="Image 1">
+  <img src="placeholder.jpg" data-src="image2.jpg" alt="Image 2">
+  <img src="placeholder.jpg" data-src="image3.jpg" alt="Image 3">
+
+  <script>
+    // Lazy load images when they come into the viewport
+    window.addEventListener('load', function() {
+      const lazyImages = document.querySelectorAll('img[data-src]');
+      
+      const lazyLoad = function() {
+        lazyImages.forEach(img => {
+          if (img.getBoundingClientRect().top <= window.innerHeight && img.getBoundingClientRect().bottom >= 0 && getComputedStyle(img).display !== 'none') {
+            img.src = img.dataset.src;
+            img.removeAttribute('data-src');
+          }
+        });
+        
+        // Remove the event listener once all images are loaded
+        if (lazyImages.length === 0) {
+          window.removeEventListener('load', lazyLoad);
+          window.removeEventListener('resize', lazyLoad);
+          window.removeEventListener('scroll', lazyLoad);
+        }
+      };
+      
+      window.addEventListener('resize', lazyLoad);
+      window.addEventListener('scroll', lazyLoad);
+      lazyLoad();
+    });
+  </script>
+</body>
+</html>
+```
+
+In this example:
+
+1. The critical CSS is loaded in the `<head>` section of the document to style the above-the-fold content.
+2. The above-the-fold content (a heading and a paragraph) is placed at the beginning of the `<body>` to ensure it's displayed immediately when the page loads.
+3. The non-critical script is loaded asynchronously using the `async` attribute. Alternatively, you can use the `defer` attribute to defer its execution until after the HTML parsing is complete.
+4. Images are initially loaded with a placeholder image (`placeholder.jpg`). The actual image sources are stored in the `data-src` attribute.
+5. A script is used to lazy load the images when they come into the viewport. The images are replaced with their actual sources (`data-src`) once they become visible to the user.
+
+This approach ensures that the critical content is loaded and displayed immediately, while non-essential scripts and images are loaded asynchronously and only when needed. This can lead to a faster perceived loading time and a smoother user experience, especially on slower connections or devices.
