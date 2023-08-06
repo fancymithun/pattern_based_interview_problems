@@ -452,3 +452,307 @@ p span{
 Here, the browser first finds all span elements in the DOM and then it traverses to each of its parent elements to check if they are the paragraph p elements.
 
 Once the browser finds all matching span tags having paragraph elements as parent and applies the color of black to the content, the matching process is stopped.
+
+21. ### What do the following CSS selectors mean? 
+**div, p**
+**div p**
+**div ~ p**
+**div + p**
+**div > p**
+
+div, p: This selector implies selecting all div elements and all p elements.
+Consider an example below:
+
+```html
+
+   <h1>Heading 1</h1>
+   <div>
+       Division 1
+       <p> paragraph 1</p> <!-- Will be selected -->
+   </div>
+   <p> paragraph 2</p> 
+   <p> paragraph 3</p> 
+   <div>
+       Division 2
+   </div>
+   <span> Span 1 </span>
+
+```
+Here, all the div elements and the p elements would be selected by the browser irrespective of their parents or where they are placed. The remaining tags like h1 and span are ignored.
+
+div p : This selector tells to select all p elements that are inside div elements. Consider an example below:
+
+```html
+  <h1>Heading 1</h1>
+<div>
+    Division 1
+    <p> paragraph 1</p> <!-- Will be selected -->
+    <div>
+        <p> Inner Div Paragraph </p> <!-- Will be selected -->
+    </div>
+</div>
+<p> paragraph 2</p>
+<p> paragraph 3</p>
+<div>
+    Division 2
+</div>
+<span> Span 1 </span>
+
+```
+
+Here, <p> paragraph 1</p> and <p> Inner Div Paragraph </p> would be selected by the browser and the properties are applied. The rest of the paragraph tags are not selected.
+
+div ~ p : This selector tells to select all p elements that have div elements preceeded anywhere. Consider an example,
+
+```html
+<h1>Heading 1</h1>
+<div>
+   Division 1
+   <p> paragraph 1</p>
+</div>
+<p> paragraph 2</p> <!-- Will be selected -->
+<p> paragraph 3</p> <!-- Will be selected -->
+<div>
+   Division 2
+</div>
+<span> Span 1 </span>
+
+```
+
+Here, paragraph 2 and paragraph 3 elements would be selected as marked in the code above.
+
+div + p : This selector says to select all p elements placed immediately after the div element. Consider an example in this case:
+
+```html
+    <h1>Heading 1</h1>
+   <div>
+       Division 1
+       <p> paragraph 1</p>
+   </div>
+   <p> paragraph 2</p> <!-- Will be selected -->
+   <p> paragraph 3</p> 
+   <div>
+       Division 2
+   </div>
+   <span> Span 1 </span>
+
+```
+
+div > p : This selector says to select all p elements which has div as an immediate parent. In the same example below:
+
+```html
+    <h1>Heading 1</h1>
+   <div>
+       Division 1
+       <p> paragraph 1</p> <!-- Will be selected -->
+   </div>
+   <p> paragraph 2</p> 
+   <p> paragraph 3</p> 
+   <div>
+       Division 2
+   </div>
+   <span> Span 1 </span>
+
+```
+
+Only <p> paragraph 1</p> will be selected in this case because it has immediate div as the parent.
+
+22. ### What are the properties of flexbox?
+
+Flexbox stands for flexible box and it was introduced around 2017 in CSS with the purpose of providing an efficient way to handle layouts, align elements within them and distribute spaces amongst the items in dynamic/responsive conditions. It provides an enhanced ability to alter the dimensions of the items and make use of the available space in the container efficiently. In order to achieve this, CSS3 provides some properties.
+
+flex-direction: This property helps in defining the direction the container should stack the items targetted for flex. The values of this property can be
+row: Stacks items horizontally from left to right in the flex container.
+column: Stacks items vertically from top to bottom in the flex container.
+row-reverse: Stacks items horizontally from right to left in the flex container.
+column-reverse: Stacks items vertically from bottom to top in the flex container.
+
+flex-wrap: This property specifies of the flex items should be wrapped or not. Possible values are:
+wrap: The flex items would be wrapped if needed.
+nowrap: This is the default value that says the items won’t be wrapped.
+wrap-reverse: This specifies that the items will be wrapped if needed but in reverse order.
+
+justify-content: Used for aligning the flex items. Possible values are:
+center: It means that all the flex items are present at the center of the container.
+flex-start: This value states that the items are aligned at the start of the container. This is the default value.
+flex-end: This value ensures the items are aligned at the end of the container.
+space-around: This value displays the items having space between, before, around the items.
+space-between: This value displays items with spaces between the lines.
+
+align-items: This is used for aligning flex items.
+
+align-content: This is used for aligning the flex lines.
+
+flex-flow: This property is used for setting both flex-direction and flex-wrap properties in one statement.
+
+23. ### What is cascading in CSS?
+
+“Cascading” refers to the process of going through the style declarations and defining weight or importance to the styling rules that help the browser to select what rules have to be applied in times of conflict. The conflict here refers to multiple rules that are applicable to a particular HTML element. In such cases, we need to let the browser know what style needs to be applied to the element. This is done by cascading down the list of style declarations elements.
+
+For example, if we have the below style:
+```css
+p{
+    color:white;
+}
+
+```
+```css
+p{
+    color:white !important;
+}
+
+```
+
+!important ensures that the property has the maximum weight in presence of other conflicting properties.
+
+24. ### How will you fix browser-specific styling issues?
+
+Different ways to fix browser-specific issues.
+
+We can write browser-specific styles separately in different sheets and load that only when the specific browser is used. This makes use of the server-side rendering technique.
+We can use auto-prefix for automatically adding vendor prefixes in the code.
+We can also use normalize.css or reset CSS techniques.
+There are some ways for avoiding browser compatibility issues too. They are as follows:
+
+Validate HTML and CSS: We know that the code will be read, interpreted and handled differently by different browsers. We need to validate our HTML and CSS files for the missing closing tags, or missing semicolons in the syntaxes because there are chances that the old browsers will throw errors while rendering the code. We can avoid those errors by:
+Maintaining well-aligned code that helps in easy readability.
+Inserting comments at necessary places.
+Make use of validation tools like Jigsaw CSS validator, W3C HTML Validators to identify syntax issues in the code.
+Maintain Cross-Browser Compatibility in the Layouts: Cross-Browser compatibility is a must while developing web applications. We expect our application to be responsive across all devices, browsers and platforms. Some of the effects of layout incompatibilities are unresponsiveness of the layouts in mobile devices, the difference in layout rendering between modern and old browsers, etc. These incompatibilities can be avoided by using:
+CSS Multi-Column layouts - For maintaining proper layouts w.r.t columns and containers.
+HTML viewport metatag – For ensuring content is properly spanned across mobile devices.
+CSS Flexbox and Grids - To layout child elements depending on the content and available space.
+CSS resets stylesheets - For reducing browser inconsistencies in default line heights, font sizes, margins etc.
+Check JavaScript Library issues: Ensure the libraries are used judiciously and the ones used are supported by the browsers.
+Check DOCTYPE tag keyword: The DOCTYPE keyword is meant for defining rules of what needs to be used in the code. Older browser versions check for DOCTYPE tag at the beginning and if not found, the application rendering won't be proper.
+Test on real devices: Although applications can be tested on virtual environments, it would be more beneficial if the testing is carried out on real devices and platforms. We can use tools like Testsigma for this purpose that enables us to test in real devices parallelly.
+
+25. ### Why do we need to use clear property along with floats in CSS?
+
+The clear property along with floats is used for specifying which side of floating elements is not supposed to float. An element having clear property ensures that the element does not move up adjacent to the float. But the element will be moved down past the float.
+
+Let us understand this with the help of an example. We know that the floated objects do not add to the height of the objects where they reside. Consider we have a div element with class “floated_div” within another div element with id “main_div”.
+
+```html
+
+<html>
+    <head>
+    <style>
+        #main_div {
+             width: 400px;
+             margin: 10px auto;
+             border: 4px solid #cccccc;
+             padding: 5px;
+        }
+
+        .floated_div {
+             float: left;
+             width: 50px;
+             height: 50px;
+             border: 2px solid #990000;
+             margin: 10px;
+        }
+    </style>
+    </head>
+    <body>
+        <div id="main_div">
+             <p>Clear Float Demo</p>
+             <div class="floated_div"></div>
+             <div class="floated_div"></div>
+             <div class="floated_div"></div>
+             <div class="floated_div"></div>
+             <div class="floated_div"></div>
+        </div>
+    </body>
+</html>
+
+```
+
+The result of this code would be as shown below. We see that the squares that are expected to be within dev are not within the main parent div. How do we fix this?
+
+
+We can do it just by adding <div style="clear:both"></div> line at the end of the last floated element so that the floated elements are fit in properly within the main div container.
+
+```html
+
+<html>
+    <head>
+    <style>
+        #main_div {
+             width: 400px;
+             margin: 10px auto;
+             border: 4px solid #cccccc;
+             padding: 5px;
+        }
+
+        .floated_div {
+             float: left;
+             width: 50px;
+             height: 50px;
+             border: 2px solid #990000;
+             margin: 10px;
+        }
+    </style>
+    </head>
+    <body>
+        <div id="main_div">
+             <p>Clear Float Demo</p>
+            
+             <div class="floated_div"></div>
+             <div class="floated_div"></div>
+             <div class="floated_div"></div>
+             <div class="floated_div"></div>
+             <div class="floated_div"></div>
+             <div style="clear:both"></div>    <!-- Adding this fixed the issue -->
+        </div>
+    </body>
+</html>
+
+```
+
+26. ### What do you understand by tweening in CSS?
+
+In CSS, tweening (short for "in-betweening") refers to the process of smoothly animating an element's property from one state to another state over a specified duration. It allows you to create smooth and fluid animations between different CSS styles without the need for JavaScript or complex scripting.
+
+CSS tweening is typically achieved using CSS transitions or CSS animations, which are CSS properties and values that control the animation behavior.
+
+1. **CSS Transitions**:
+   - CSS transitions allow you to animate a property change from its initial state to a final state over a specified duration.
+   - You define the transition using the `transition` property, specifying the property you want to animate, the duration of the animation, and the easing function (how the animation accelerates or decelerates over time).
+
+   ```css
+   /* Example of CSS transition */
+   .box {
+     width: 100px;
+     height: 100px;
+     background-color: blue;
+     transition: width 1s ease;
+   }
+
+   .box:hover {
+     width: 200px; /* Width will smoothly transition from 100px to 200px on hover */
+   }
+   ```
+
+2. **CSS Animations**:
+   - CSS animations provide more control and flexibility over the animation process.
+   - You define animations using the `@keyframes` rule to specify the keyframes or intermediate states of the animation.
+   - You then apply the animation to an element using the `animation` property, specifying the name of the animation, the duration, the timing function, and any other animation-related properties.
+
+   ```css
+   /* Example of CSS animation */
+   @keyframes slide-in {
+     0% {
+       transform: translateX(-100%);
+     }
+     100% {
+       transform: translateX(0);
+     }
+   }
+
+   .box {
+     animation: slide-in 1s ease;
+   }
+   ```
+
+Both CSS transitions and animations provide a way to smoothly transition or animate properties, such as size, position, opacity, color, and more. They are widely used to add visual enhancements to web pages and create engaging user experiences. Tweening with CSS is a lightweight and performant approach compared to using JavaScript for animations, making it a popular choice for simple animations and interactions. However, for more complex and interactive animations, JavaScript and libraries like GSAP or Framer Motion may be more suitable.
