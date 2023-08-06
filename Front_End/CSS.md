@@ -756,3 +756,445 @@ CSS tweening is typically achieved using CSS transitions or CSS animations, whic
    ```
 
 Both CSS transitions and animations provide a way to smoothly transition or animate properties, such as size, position, opacity, color, and more. They are widely used to add visual enhancements to web pages and create engaging user experiences. Tweening with CSS is a lightweight and performant approach compared to using JavaScript for animations, making it a popular choice for simple animations and interactions. However, for more complex and interactive animations, JavaScript and libraries like GSAP or Framer Motion may be more suitable.
+
+27. ### What is the importance of CSS Sprites?
+
+CSS sprites are a technique used in web development to improve website performance and reduce the number of server requests made by a web page. They involve combining multiple images into a single image and then using CSS background positioning to display specific parts of the combined image as needed. The importance of CSS sprites can be understood from the following key benefits:
+
+1. **Reduced HTTP Requests**: One of the main advantages of using CSS sprites is that they reduce the number of HTTP requests made to the server. In a traditional setup, each individual image requires a separate request to be loaded by the browser. With CSS sprites, multiple images are combined into one, leading to fewer requests, which can significantly speed up page loading times, especially for web pages with many images.
+
+2. **Faster Page Load Times**: By reducing the number of HTTP requests, CSS sprites help improve the overall loading speed of a web page. This is particularly important for websites that target users on slow internet connections or mobile devices, as it can result in a better user experience and lower bounce rates.
+
+3. **Better Caching**: When using CSS sprites, the single combined image can be cached by the browser, making subsequent page visits even faster. Caching the image reduces the need for additional server requests, further improving the performance of the website.
+
+4. **Simplified CSS**: CSS sprites simplify the CSS code by using background positioning to display the correct part of the combined image. This reduces the amount of CSS code needed to style the elements on the page, making the codebase more maintainable and easier to work with.
+
+5. **Reduced Bandwidth Usage**: Since fewer image files need to be downloaded, CSS sprites can help reduce bandwidth usage for both the website owner and the website visitors. This is especially beneficial for websites with a high amount of traffic.
+
+6. **Seamless Hover Effects**: CSS sprites are commonly used for creating hover effects, such as changing the background position of an element on hover to display a different part of the combined image. This provides a seamless and smooth transition between different states of the element.
+
+While CSS sprites offer significant benefits for performance and user experience, they require careful planning and consideration during the development process. Care must be taken to ensure that the combined image contains all the necessary elements, and background positioning should be set accurately to display the correct parts of the image. Tools and techniques are available to automate the creation of CSS sprites, making it easier for developers to implement this optimization technique effectively.
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+#home-icon {
+  left: 0px;
+  width: 46px;
+  background: url('spriteFile.gif') 0 0;
+}
+
+#prev-icon {
+  left: 63px;
+  width: 43px;
+  background: url('spriteFile.gif') -47px 0;
+}
+
+#next-icon {
+  left: 129px;
+  width: 43px;
+  background: url('spriteFile.gif') -91px 0;
+}
+</style>
+</head>
+<body>
+
+<img id="home-icon" src="spriteFile.gif" width="1" height="1">    <!-- To display home icon here -->
+<img id="next-icon" src="spriteFile.gif" width="1" height="1">    <!-- To display next icon icon here -->
+<img id="prev-icon" src="spriteFile.gif" width="1" height="1">    <!-- To display previous icon icon here -->
+
+</body>
+</html>
+
+```
+
+28. ### Explain CSS position property?
+
+Absolute: To place an element exactly where you want to place it. absolute position is actually set relative to the element's parent. if no parent is available then the relative place to the page itself (it will default all the way back up to the element).
+Relative: "Relative to itself". Setting position: relative; on an element and no other positioning attributes, it will no effect on its positioning. It allows the use of z-index on the element and it limits the scope of absolutely positioned child elements. Any child element will be absolutely positioned within that block. 
+Fixed: The element is positioned relative to the viewport or the browser window itself. viewport doesn't change if you scroll and hence the fixed element will stay right in the same position. 
+Static: Static default for every single page element. The only reason you would ever set an element to position: static is to forcefully remove some positioning that got applied to an element outside of your control.
+Sticky: Sticky positioning is a hybrid of relative and fixed positioning. The element is treated as relative positioned until it crosses a specified threshold, at which point it is treated as fixed positioned.
+
+29. ### When does DOM reflow occur?
+
+Reflow is the name of the web browser process for re-calculating the positions and geometries of elements in the document, for the purpose of re-rendering part or all of the document. 
+
+Reflow occurs when:
+
+Insert, remove or update an element in the DOM.
+Modify content on the page, e.g. the text in an input box.
+Move a DOM element.
+Animate a DOM element.
+Take measurements of an element such as offsetHeight or getComputedStyle.
+Change a CSS style
+
+30. ### Different Box Sizing Property?
+
+The box-sizing CSS property sets how the total width and height of an element are calculated.
+
+Content-box: The default width and height values apply to the element's content only. The padding and border are added to the outside of the box.
+Padding-box: Width and height values apply to the element's content and its padding. The border is added to the outside of the box. Currently, only Firefox supports the padding-box value.
+Border-box: Width and height values apply to the content, padding, and border
+
+31. ### How to center align a div inside another div?
+
+**Centering with Flexbox**
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <style>
+      .cn {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: red;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="”cn”">
+      <div class="”inner”">your content</div>
+    </div>
+  </body>
+</html>
+
+```
+
+**Centering with Grid**
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <style>
+      .wrap-grid {
+        display: grid;
+        place-content: center;
+       }
+    </style>
+  </head>
+  <body>
+    <div class="”cn”">
+      <div class="”inner”">your content</div>
+    </div>
+  </body>
+</html>
+
+```
+
+**Centering with Transform**
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <style>
+      .wrap-grid {
+        display: grid;
+        place-content: center;
+       }
+    </style>
+  </head>
+  <body>
+    <div class="”cn”">
+      <div class="”inner”">your content</div>
+    </div>
+  </body>
+</html>
+```
+
+32. ### Can you name the four types of @media properties?
+
+The four types of @media properties are:
+
+All → It’s the default property. Used for all media-type devices.
+Screen → Used for computer screen, mobile screen.
+Print → Used for printers.
+Speech → Used for screen readers
+
+Media queries in CSS allow you to apply different styles based on the characteristics of the user's device or viewport. You can use media queries to adapt your layout and styles for various screen sizes, resolutions, and devices. Here's the basic syntax for media queries with different properties:
+
+1. **Using Width (Screen Size)**:
+   ```css
+   /* Example of media query based on screen width */
+   @media screen and (max-width: 768px) {
+     /* CSS styles for screens with a maximum width of 768px */
+   }
+   ```
+
+2. **Using Height (Screen Height)**:
+   ```css
+   /* Example of media query based on screen height */
+   @media screen and (min-height: 600px) {
+     /* CSS styles for screens with a minimum height of 600px */
+   }
+   ```
+
+3. **Using Device Orientation**:
+   ```css
+   /* Example of media query based on device orientation */
+   @media (orientation: landscape) {
+     /* CSS styles for landscape orientation */
+   }
+
+   @media (orientation: portrait) {
+     /* CSS styles for portrait orientation */
+   }
+   ```
+
+4. **Using Device Resolution (DPI/PPI)**:
+   ```css
+   /* Example of media query based on device resolution */
+   @media (min-resolution: 300dpi) {
+     /* CSS styles for devices with a minimum resolution of 300dpi */
+   }
+   ```
+
+5. **Combining Multiple Properties**:
+   You can combine multiple properties in a media query to target specific device characteristics.
+   ```css
+   /* Example of media query with multiple properties */
+   @media screen and (max-width: 768px) and (orientation: landscape) {
+     /* CSS styles for screens with a maximum width of 768px and landscape orientation */
+   }
+   ```
+
+6. **Using Aspect Ratio**:
+   ```css
+   /* Example of media query based on aspect ratio */
+   @media screen and (aspect-ratio: 16/9) {
+     /* CSS styles for screens with a 16:9 aspect ratio */
+   }
+   ```
+
+7. **Using Pixel Density (DPR)**:
+   ```css
+   /* Example of media query based on pixel density (DPR) */
+   @media (min-resolution: 2dppx) {
+     /* CSS styles for devices with a minimum pixel density of 2dppx (Retina displays, for example) */
+   }
+   ```
+
+These are just a few examples of the different properties you can use in media queries. Media queries are powerful tools that allow you to create responsive designs and adapt your website's layout and styles to different devices and viewing conditions.
+
+33. ### What is the grid system?
+
+CSS Grid Layout is the most powerful layout system available in CSS. It is said to be a 2-dimensional system, meaning it can handle both columns and rows, unlike flexbox which is largely a 1-dimensional system.
+
+34. ### Different layout systems in css
+
+In CSS, there are several layout systems and techniques that web developers use to create different types of layouts for web pages. Each layout system serves specific purposes and provides flexibility in arranging and positioning elements on the page. Here are some of the most commonly used layout systems in CSS:
+
+1. **Normal Flow (Static Layout)**:
+   - The default layout system in CSS is called the normal flow, which is also known as the static layout.
+   - Elements are placed in the order they appear in the HTML document and flow from left to right, top to bottom.
+   - Elements take up the space they require, and if there is not enough horizontal space, they wrap to the next line.
+
+2. **Float Layout**:
+   - Float layout is used to create multi-column designs or to position elements side-by-side.
+   - Elements with `float: left` or `float: right` are removed from the normal flow and positioned next to each other until they reach the edge of their container or another floated element.
+   - It's commonly used for creating simple grids or image galleries.
+
+3. **Flexbox Layout**:
+   - Flexbox is a one-dimensional layout system that allows you to create flexible and responsive layouts with ease.
+   - It uses flex containers and flex items to arrange elements in rows or columns.
+   - Flexbox provides powerful alignment and distribution capabilities, making it great for creating complex and dynamic layouts.
+
+4. **Grid Layout**:
+   - CSS Grid Layout is a two-dimensional layout system that allows you to create grid-based layouts with rows and columns.
+   - It offers more control over the positioning and sizing of elements compared to Flexbox.
+   - Grid Layout is ideal for creating complex grid structures and responsive layouts.
+
+5. **Positioning (Relative, Absolute, Fixed)**:
+   - CSS positioning allows you to position elements in relation to their normal flow position or relative to a containing element.
+   - `position: relative` positions an element relative to its normal position, while `position: absolute` positions an element relative to its closest positioned ancestor or the viewport.
+   - `position: fixed` positions an element relative to the viewport, making it fixed as the user scrolls.
+
+6. **CSS Floats and Clearing**:
+   - Although floats were mentioned earlier, clearing floats is also a technique used to properly contain floated elements within their parent containers.
+   - The `clear` property is used to ensure elements after floated elements flow below them rather than beside them.
+
+These layout systems can be used individually or in combination to achieve the desired layout for a web page. Each system has its strengths and use cases, and the choice of layout system depends on the complexity of the design and the requirements of the project. With CSS Grid and Flexbox becoming widely supported, they are increasingly being used to create modern, responsive, and flexible layouts.
+
+35. ### What are the different ways to hide the element using CSS?
+
+Using display property(display: none). It’s not available for screen readers. The element will not exist in the DOM if display: none is used.
+Using visibility property(visibility: hidden), will take up the space of the element. It will be available to screen reader users. The element will actually be present in the DOM, but not shown on the screen.
+Using position property (position: absolute). Make it available outside the screen.
+
+36. ### What does the :root pseudo-class refer to?
+
+The :root selector allows you to target the highest-level “parent” element in the DOM, or document tree. It is defined in the CSS Selectors Level 3 specification
+
+36. ### What does Accessibility (a11y) mean?
+
+Accessibility refers to how software or hardware combinations are designed to make a system accessible to persons with disabilities, such as visual impairment, hearing loss, or limited dexterity.
+
+For example, a website developed with accessibility in mind might have text-to-speech capabilities. In the USA public websites have to have accessible compliance. It’s defined in 508 compliance. It gives the guidelines and best practices for all website users that should be met with key areas of accessibility.
+
+37. ### How do I restore the default value of a property?
+
+The keyword initial can be used to reset it to its default value.
+
+38. ### Difference between CSS grid vs flexbox?
+
+CSS Grid Layout is a two-dimensional system, meaning it can handle both columns and rows. Grid layout is intended for larger-scale layouts which aren’t linear in design.
+Flexbox is largely a one-dimensional system (either in a column or a row). Flexbox layout is most appropriate to the components of an application.
+
+39. ### How does Calc work?
+
+The calc() function in CSS allows you to perform simple mathematical calculations to determine the value of a property. It enables you to combine different units (e.g., pixels, percentages, ems) and perform addition, subtraction, multiplication, and division operations. The result of the calculation becomes the value of the CSS property.
+
+```css
+
+width: calc(100% - 50px);
+/* The width will be 100% of the parent container minus 50 pixels */
+
+font-size: calc(16px * 1.5);
+/* The font size will be 24 pixels (16 * 1.5) */
+
+padding: calc(20px / 2);
+/* The padding will be 10 pixels (20 / 2) */
+
+height: calc(50vh + 100px);
+/* The height will be 50% of the viewport height plus 100 pixels */
+
+margin: calc(2em + 10%);
+/* The margin will be 2 times the font size (in ems) plus 10% of the parent width */
+
+width: calc((100% - 20px) / 3);
+/* The width will be one-third of the parent container's width minus 20 pixels */
+
+padding: calc(10px + 5%) calc(20px - 5%);
+/* The padding will be 10 pixels plus 5% of the parent width (horizontal) and 20 pixels minus 5% of the parent width (vertical) */
+
+```
+
+40. ### What is specificity? How to calculate specificity?
+
+A process of determining which CSS rule will be applied to an element. It actually determines which rules will take precedence. Inline style usually wins then ID then the class value (or pseudo-class or attribute selector), the universal selector (*) has no specificity. ID selectors have a higher specificity than attribute selectors.
+
+41. ### What does !important mean in CSS?
+
+The style is having the important will have the highest precedence and it overrides the cascaded property.
+
+```css
+#myDiv {
+  color: red !important;
+}
+
+```
+In this example, even though the inline style sets the color to blue, the !important declaration in the CSS rule will take precedence and set the color to red. The !important rule overrides the inline style due to its higher specificity.
+
+Again, it's essential to use !important judiciously, as relying too heavily on it can lead to difficulties in maintaining and updating the styles in your codebase. Instead, it's generally better to follow best practices for CSS organization and specificity to avoid the need for !important in most cases.
+
+42. ### What does * { box-sizing: border-box; } do? What are its advantages?
+
+It makes every element in the document include the padding and border in the element’s inner dimension for the height and width computation.  
+In box-sizing: border-box, The height of an element is now calculated by the content's height + vertical padding + vertical border width.
+The width of an element is now calculated by the content's width + horizontal padding + horizontal border width.
+
+43. ### What is the difference between CSS variables and preprocessor(SASS, LESS, Stylus) variables?
+
+CSS variables, also known as CSS custom properties, and preprocessor variables (e.g., SASS, LESS, Stylus variables) are both used to store and reuse values in CSS. However, they have some significant differences in how they work and when they are processed.
+
+**CSS Variables (CSS Custom Properties)**:
+
+1. **Scope**:
+   - CSS variables have a global scope, meaning they can be defined at the root level and are accessible from any part of the CSS code within the same document.
+   - They can be used inside selectors, rules, media queries, or any CSS block.
+
+2. **Dynamic Values**:
+   - CSS variables support dynamic values, which means you can change their values dynamically using JavaScript.
+   - This allows you to create themes or apply different styles based on user interactions or other conditions.
+
+3. **Fallback Values**:
+   - CSS variables can have fallback values that will be used when the variable is not defined or not supported by the browser.
+   - Fallback values provide graceful degradation in older browsers that do not support CSS variables.
+
+4. **Syntax**:
+   - CSS variables are declared using the `--` prefix followed by a custom name.
+   - For example: `--main-color: red;`
+
+**Preprocessor Variables (SASS, LESS, Stylus Variables)**:
+
+1. **Scope**:
+   - Preprocessor variables have a limited scope, specific to the file in which they are defined.
+   - They cannot be accessed from other files unless they are imported explicitly.
+
+2. **Static Values**:
+   - Preprocessor variables are static, meaning their values cannot be changed dynamically using JavaScript.
+   - They are set at compile time and remain fixed throughout the life of the stylesheet.
+
+3. **Mixins and Functions**:
+   - Preprocessors offer more advanced features like mixins and functions, which allow you to create reusable blocks of CSS code and perform more complex operations.
+
+4. **Syntax**:
+   - Preprocessor variables are defined using the specific syntax of the preprocessor being used.
+   - For example, in SASS: `$main-color: red;`
+
+**Example:**
+
+Let's consider a simple example to illustrate the difference between CSS variables and preprocessor variables:
+
+CSS Variables (CSS Custom Properties):
+```css
+/* Define a CSS variable at the root level */
+
+:root {
+    --main-color: blue;
+}
+
+button{
+    background-color: var(--main-color)
+}
+```
+
+Preprocessor Variables (SASS):
+```scss
+$main-color: blue;
+
+button {
+    background-color: $main-color;
+}
+```
+
+In this example, both CSS variables and preprocessor variables are used to set the background color of a button to blue. However, the syntax and scoping of the variables are different. CSS variables are more dynamic and have a broader scope, while preprocessor variables are static and limited to the file in which they are defined.
+
+44. ### What do CSS Custom properties variables mean?
+
+Custom properties (sometimes referred to as CSS variables or cascading variables) are defined by users that contain specific values to be reused throughout a document. The value is set using -- notion. And the values are accessed using the var() function.
+
+```css
+:root {
+	--main-bg-color: brown;
+    --main-color: white;
+}
+
+.one {
+	color: var(--main-color);
+	background-color· var (--main-bg-color);
+	margin: 10px;
+	width: 50px;
+	height: 5Opx;
+	display: inline-block;
+}
+
+```
