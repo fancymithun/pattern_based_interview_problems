@@ -2274,3 +2274,91 @@ In summary, event bubbling is a natural behavior in the DOM, but you can prevent
 
 One way to prevent event bubbling is using event.stopPropagation() or event.cancelBubble on IE < 9.
 
+72. ### What are some of the advantages/disadvantages of writing JavaScript code in a language that compiles to JavaScript?
+
+Some examples of languages that compile to JavaScript include CoffeeScript, Elm, ClojureScript, PureScript, and TypeScript.
+
+Practically, ES2015 has vastly improved JavaScript and made it much nicer to write. I don't really see the need for CoffeeScript these days.
+
+73. ### What language constructions do you use for iterating over object properties and array items?
+
+In JavaScript, you can use different language constructs to iterate over object properties and array items. Here are some common methods for both:
+
+**Iterating Over Object Properties:**
+
+1. **For...in Loop:**
+   The `for...in` loop iterates over the enumerable properties of an object, including properties inherited from its prototype chain. It's commonly used for iterating over object properties.
+
+   ```javascript
+   for (const key in object) {
+     if (object.hasOwnProperty(key)) {
+       // Access object[key]
+     }
+   }
+   ```
+
+2. **Object.keys():**
+   The `Object.keys()` method returns an array of a given object's own enumerable property names, which you can then iterate using a loop or other array methods.
+
+   ```javascript
+   const keys = Object.keys(object);
+   for (const key of keys) {
+     // Access object[key]
+   }
+   ```
+
+3. **Object.values() and Object.entries():**
+   Similar to `Object.keys()`, the `Object.values()` and `Object.entries()` methods return arrays of values and key-value pairs, respectively, that you can iterate over.
+
+   ```javascript
+   const values = Object.values(object);
+   for (const value of values) {
+     // Access value
+   }
+
+   const entries = Object.entries(object);
+   for (const [key, value] of entries) {
+     // Access key and value
+   }
+   ```
+
+**Iterating Over Array Items:**
+
+1. **For Loop:**
+   The traditional `for` loop can be used to iterate over array items using the array's length property.
+
+   ```javascript
+   for (let i = 0; i < array.length; i++) {
+     // Access array[i]
+   }
+   ```
+
+2. **forEach() Method:**
+   The `forEach()` method is available on arrays and provides a clean and concise way to iterate over each element in the array.
+
+   ```javascript
+   array.forEach(function(item, index) {
+     // Access item and index
+   });
+   ```
+
+3. **for...of Loop:**
+   The `for...of` loop is a modern iteration construct that directly iterates over the values of iterable objects, such as arrays.
+
+   ```javascript
+   for (const item of array) {
+     // Access item
+   }
+   ```
+
+4. **Array.prototype.map(), Array.prototype.filter(), etc.:**
+   Array methods like `map()`, `filter()`, `reduce()`, and others can also be used for iteration while performing specific operations on array items.
+
+   ```javascript
+   const newArray = array.map(function(item) {
+     // Perform operation on item and return new value
+   });
+   ```
+
+Each of these constructs has its own use cases and benefits. When choosing an iteration method, consider factors like performance, readability, and the specific task you need to accomplish.
+
