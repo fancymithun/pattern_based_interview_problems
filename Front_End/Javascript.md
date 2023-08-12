@@ -2362,3 +2362,2409 @@ In JavaScript, you can use different language constructs to iterate over object 
 
 Each of these constructs has its own use cases and benefits. When choosing an iteration method, consider factors like performance, readability, and the specific task you need to accomplish.
 
+74. ###  When should I use Arrow Functions in ES6?
+
+Arrow functions in ES6 provide a concise and more intuitive syntax for defining functions compared to traditional function expressions. They are particularly useful in certain scenarios where their characteristics align well with the requirements of your code. Here are some situations where you might consider using arrow functions:
+
+1. **Shorter Function Definitions:**
+   Arrow functions are especially beneficial for short, one-liner functions where brevity and clarity are important.
+
+   ```javascript
+   // Traditional function expression
+   const square = function(x) {
+     return x * x;
+   };
+
+   // Arrow function
+   const square = x => x * x;
+   ```
+
+2. **Implicit Return:**
+   If a function consists of a single expression, arrow functions allow you to omit the curly braces and the `return` keyword, as the expression's value is implicitly returned.
+
+   ```javascript
+   // Traditional function expression
+   const double = function(x) {
+     return x * 2;
+   };
+
+   // Arrow function with implicit return
+   const double = x => x * 2;
+   ```
+
+3. **No `this` Binding:**
+   Arrow functions do not have their own `this` context; instead, they inherit the `this` value from the surrounding lexical context. This makes arrow functions particularly useful in scenarios where you want to maintain the value of `this` from an outer function.
+
+   ```javascript
+   function Counter() {
+     this.count = 0;
+     setInterval(() => {
+       // "this" refers to the Counter instance
+       this.count++;
+       console.log(this.count);
+     }, 1000);
+   }
+   ```
+
+4. **Callbacks and Iterators:**
+   Arrow functions can make callback functions and iterator functions more concise, improving readability.
+
+   ```javascript
+   const numbers = [1, 2, 3, 4, 5];
+
+   // Using arrow function with map
+   const squaredNumbers = numbers.map(num => num * num);
+
+   // Using arrow function with filter
+   const evenNumbers = numbers.filter(num => num % 2 === 0);
+   ```
+
+5. **Function Composition:**
+   Arrow functions can be easily combined for function composition, creating a more elegant and functional programming style.
+
+   ```javascript
+   const add = x => x + 1;
+   const multiply = x => x * 2;
+   const result = multiply(add(5)); // 12
+   ```
+
+While arrow functions offer several benefits, it's important to note that they also have limitations, such as not being suitable for methods that require their own `this` context, like prototype methods or constructors. In such cases, traditional function expressions or the `function` keyword are more appropriate.
+
+Overall, arrow functions are a powerful addition to ES6, providing concise syntax and improved readability for specific use cases where their features align well with the requirements of your code.
+
+75. ### Explain the difference between undefined and not defined in JavaScript
+
+In JavaScript, "undefined" and "not defined" are terms often used to describe different scenarios related to variables and identifiers, but they have distinct meanings:
+
+**1. Undefined:**
+- **Type:** `undefined` is a special value and data type in JavaScript that indicates the absence of a value.
+- **Situation:** A variable is considered `undefined` when it has been declared but has not been assigned a value.
+
+Example:
+```javascript
+let x;
+console.log(x); // Output: undefined
+```
+
+- **Returned by:** Functions that do not explicitly return a value will return `undefined`.
+
+Example:
+```javascript
+function doSomething() {
+  // no return statement
+}
+
+const result = doSomething();
+console.log(result); // Output: undefined
+```
+
+**2. Not Defined:**
+- **Situation:** The term "not defined" is used when trying to access a variable or identifier that has not been declared or is not in scope. This results in a ReferenceError, indicating that the identifier is not recognized by the JavaScript engine.
+
+Example:
+```javascript
+console.log(y); // ReferenceError: y is not defined
+```
+
+- **Scope:** A variable or identifier can be "not defined" if it is outside of the current scope, such as attempting to access a local variable from outside its function.
+
+Example:
+```javascript
+function myFunction() {
+  const localVar = 42;
+}
+
+console.log(localVar); // ReferenceError: localVar is not defined
+```
+
+In summary:
+- "Undefined" refers to the absence of a value assigned to a declared variable or a function that does not return a value.
+- "Not defined" refers to attempting to access an identifier (variable, function, object property) that has not been declared or is not in scope, resulting in a ReferenceError.
+
+It's important to understand the distinction between these terms to effectively debug and write correct JavaScript code.
+
+76. ### What are the advantages and disadvantages of using use strict?
+
+The `"use strict"` directive is a feature introduced in ECMAScript 5 (ES5) that enables strict mode in JavaScript. When `"use strict"` is included at the beginning of a script or a function, it enforces a stricter set of rules and error-checking during code execution. Here are the advantages and disadvantages of using strict mode:
+
+**Advantages:**
+
+1. **Error Prevention:** Strict mode helps catch common coding mistakes and "silent" errors that might otherwise go unnoticed, by converting them into explicit errors. This can lead to more robust and reliable code.
+
+2. **Improved Performance:** In some cases, strict mode can lead to slightly improved performance because it allows the JavaScript engine to perform certain optimizations that are not possible in non-strict mode.
+
+3. **Avoids Ambiguity:** In non-strict mode, certain JavaScript behaviors can be ambiguous or non-intuitive. Strict mode helps eliminate these ambiguities, making code behavior more predictable.
+
+4. **Enhanced Security:** Strict mode prevents the use of certain potentially unsafe features or practices, reducing the risk of security vulnerabilities in your code.
+
+5. **Future-Proofing:** As JavaScript evolves, new features and syntax may introduce conflicts with existing code. Strict mode can help identify and prevent issues that may arise due to changes in the language.
+
+**Disadvantages:**
+
+1. **Compatibility:** While strict mode is supported by all modern browsers and JavaScript engines, it may not work in very old browsers. However, the impact of this is becoming less significant as older browsers are phased out.
+
+2. **Learning Curve:** Strict mode enforces stricter rules, which might require developers to adjust their coding practices and habits. This could introduce a learning curve for those new to JavaScript.
+
+3. **Breaking Existing Code:** Enabling strict mode in an existing codebase might lead to unexpected errors if the code relies on behaviors that are considered invalid in strict mode.
+
+4. **Not a Silver Bullet:** While strict mode helps catch certain classes of errors, it does not guarantee a bug-free program. It's still important to follow best practices and conduct thorough testing.
+
+5. **Verbose Code:** In strict mode, some constructs that are allowed in non-strict mode may require additional code or modifications to comply with the stricter rules.
+
+In general, the benefits of using strict mode in JavaScript, such as improved code quality, error prevention, and enhanced security, outweigh the potential downsides. It's recommended to use strict mode in your JavaScript code to create more reliable and maintainable applications. When transitioning existing code to strict mode, careful testing and validation are important to ensure that the code continues to function as expected.
+
+77. ###  What is Currying?
+
+Currying is a functional programming technique in which a function that takes multiple arguments is transformed into a series of functions that take one argument each. The currying process allows you to partially apply a function by fixing one or more arguments, creating new functions that are specialized versions of the original function.
+
+```js
+
+//normal function
+function add(x,y,z){
+    return x + y + z
+}
+
+let result = add(1,2,4)
+console.log(result)
+
+
+//currying
+function add1(x){
+    return function(y){
+        return function(z){
+            return x + y + z
+        }
+    }
+}
+
+const result1 = add1(1)(2)(4)
+console.log(result1)
+
+```
+
+78. ### What are the differences between ES6 class and ES5 function constructors?
+
+ES6 classes and ES5 function constructors are both mechanisms in JavaScript for creating objects and implementing object-oriented programming concepts, but they have some key differences in terms of syntax, behavior, and features. Here's a comparison of ES6 classes and ES5 function constructors:
+
+**ES6 Classes:**
+
+1. **Syntax:**
+   ES6 classes introduce a more intuitive and concise syntax for defining classes and creating objects.
+
+   ```javascript
+   class Person {
+     constructor(name, age) {
+       this.name = name;
+       this.age = age;
+     }
+     
+     sayHello() {
+       console.log(`Hello, my name is ${this.name}`);
+     }
+   }
+
+   const person = new Person('Alice', 30);
+   person.sayHello(); // Output: Hello, my name is Alice
+   ```
+
+2. **Inheritance:**
+   ES6 classes support easier inheritance through the `extends` keyword, allowing you to create subclasses.
+
+   ```javascript
+   class Student extends Person {
+     constructor(name, age, studentId) {
+       super(name, age);
+       this.studentId = studentId;
+     }
+   }
+   ```
+
+3. **Encapsulation:**
+   ES6 classes provide built-in support for encapsulation through the use of public and private instance fields.
+
+   ```javascript
+   class Person {
+     #privateField = 'private value';
+     
+     constructor(name) {
+       this.name = name;
+     }
+   }
+   ```
+
+4. **Constructor and Methods:**
+   ES6 classes have a special `constructor` method for initializing instances. Other methods are defined directly within the class body.
+
+5. **Prototype Chain:**
+   ES6 classes still utilize the prototype chain for inheritance, but the syntax abstracts away some of the details.
+
+**ES5 Function Constructors:**
+
+1. **Syntax:**
+   ES5 uses function constructors to create objects, which can be less intuitive and more verbose.
+
+   ```javascript
+   function Person(name, age) {
+     this.name = name;
+     this.age = age;
+   }
+
+   var person = new Person('Alice', 30);
+   ```
+
+2. **Inheritance:**
+   Inheritance is achieved by setting the prototype of a constructor function using the `prototype` property.
+
+   ```javascript
+   function Student(name, age, studentId) {
+     Person.call(this, name, age);
+     this.studentId = studentId;
+   }
+
+   Student.prototype = Object.create(Person.prototype);
+   Student.prototype.constructor = Student;
+   ```
+
+3. **Encapsulation:**
+   ES5 doesn't natively support encapsulation, but conventions like naming conventions are used to indicate privacy.
+
+4. **Constructor and Prototype Methods:**
+   The constructor function creates instances, and methods are added to the constructor's prototype.
+
+5. **Prototype Chain:**
+   ES5 uses the prototype chain for inheritance, and developers need to manage the prototype chain explicitly.
+
+Overall, ES6 classes provide a more organized and concise way to define and work with objects in an object-oriented manner. They simplify inheritance, encapsulation, and method definition compared to ES5 function constructors, making the code easier to read and maintain. However, ES5 function constructors are still relevant and can be useful in scenarios where ES6 features are not available or practical.
+
+### 79. Why should we use ES6 classes? 
+
+ES6 (ECMAScript 2015) introduced the concept of classes in JavaScript, providing a more organized and intuitive way to create and work with objects, implement object-oriented programming (OOP) principles, and build more maintainable and readable code. Here are several reasons why you should consider using ES6 classes:
+
+1. **Clearer Syntax:** ES6 classes provide a more straightforward and intuitive syntax for defining and creating objects. The class syntax closely resembles traditional OOP languages, making the code more readable and accessible to developers familiar with other programming languages.
+
+2. **Constructor Initialization:** Classes have a built-in `constructor` method, making it easy to initialize object properties and set up instances when they are created.
+
+3. **Inheritance:** ES6 classes support simple and straightforward inheritance through the `extends` keyword, enabling you to create subclasses that inherit properties and methods from parent classes.
+
+4. **Encapsulation:** With the introduction of private fields (designated with a `#` prefix), ES6 classes provide a degree of encapsulation, allowing you to hide internal implementation details and restrict direct access to certain properties.
+
+5. **Methods Definition:** Class methods can be defined directly within the class body, making the code more organized and easier to understand.
+
+6. **Prototype Chain Abstraction:** While classes still utilize the prototype chain for inheritance, the class syntax abstracts away some of the complexities, making inheritance and method lookup more intuitive.
+
+7. **Readability and Maintainability:** ES6 classes lead to more organized and modular code, improving the overall readability and maintainability of your applications.
+
+8. **Code Reusability:** The class structure encourages better code reusability by allowing you to create specialized classes that inherit and extend the behavior of parent classes.
+
+9. **Constructor and Super Calls:** Classes provide a built-in mechanism (`super`) to call the constructor and methods of the parent class, facilitating easier extension and overriding.
+
+10. **Compatibility and Modern Practices:** ES6 classes are now widely supported in modern JavaScript environments, making them a recommended choice for structuring code and following modern programming practices.
+
+While ES6 classes offer numerous benefits, it's important to note that they are just one tool in JavaScript's toolbox. Depending on the project's needs and the development team's familiarity with different paradigms, other patterns like constructor functions, factory functions, or functional programming techniques may also be appropriate. Ultimately, the decision to use ES6 classes depends on factors such as the project's requirements, team preferences, and the desired level of organization and structure in the codebase.
+
+80. ### Explain the difference between Object.freeze() vs const
+
+`Object.freeze()` and `const` are two distinct concepts in JavaScript that serve different purposes for immutability and variable declaration. Let's explore the differences between them:
+
+**`Object.freeze()`:**
+
+`Object.freeze()` is a method in JavaScript that is used to make an object immutable. When you freeze an object, you prevent any modifications to its properties, including adding, updating, or deleting properties. This applies to both the object's own properties and its nested objects. However, `Object.freeze()` does not make nested objects immutable; it only prevents modifications to the object's reference.
+
+```javascript
+const person = {
+  name: 'Alice',
+  age: 30
+};
+
+Object.freeze(person);
+
+person.age = 31; // This assignment is ignored in strict mode
+console.log(person.age); // Output: 30
+```
+
+In the example above, the `person` object is frozen using `Object.freeze()`. Any attempt to modify the object's properties after freezing will have no effect.
+
+**`const`:**
+
+`const` is a keyword in JavaScript used for variable declaration. It creates a variable with a constant reference to a value. When you declare a variable with `const`, you cannot reassign the variable to a new value, but it does not make the value itself immutable. This means that while you cannot change the reference of the `const` variable, you can still modify the properties of the object it references.
+
+```javascript
+const person = {
+  name: 'Alice',
+  age: 30
+};
+
+person.age = 31; // This modification is allowed
+console.log(person.age); // Output: 31
+```
+
+In this example, the `person` object is assigned to a `const` variable. While you cannot reassign `person` to a new object, you can still modify the properties of the existing object.
+
+**Summary:**
+
+- `Object.freeze()` makes an object and its properties immutable, preventing modifications to the object's properties.
+- `const` creates a variable with a constant reference to a value, preventing reassignment of the variable but not preventing modifications to the properties of the referenced object.
+
+It's worth noting that while `Object.freeze()` provides a higher level of immutability for objects, it may have performance implications and is often used when strict immutability is required. On the other hand, `const` provides a basic level of protection against variable reassignment but doesn't provide the same level of immutability as `Object.freeze()`.
+
+81. ### How to compare two objects in JavaScript?  
+
+Comparing two objects in JavaScript is not as straightforward as comparing primitive values like strings or numbers, as objects are reference types. When you compare two objects using the equality operators (`==` and `===`), they are considered equal only if they reference the same memory location. However, you might want to compare objects based on their content, rather than their references. Here are some approaches to compare objects in JavaScript:
+
+**1. Comparing JSON Serialization:**
+You can compare two objects by serializing them to JSON strings and then comparing the JSON strings. This approach works well for simple objects without functions or circular references.
+
+```javascript
+function areObjectsEqual(obj1, obj2) {
+  return JSON.stringify(obj1) === JSON.stringify(obj2);
+}
+
+const obj1 = { name: 'Alice', age: 30 };
+const obj2 = { age: 30, name: 'Alice' };
+
+console.log(areObjectsEqual(obj1, obj2)); // Output: true
+```
+
+Keep in mind that this approach has limitations. It may not handle more complex objects with circular references or functions.
+
+**2. Using a Deep Equality Library:**
+There are libraries like Lodash or Ramda that provide utility functions for deep equality comparison of objects. These libraries handle more complex cases and can perform deep comparisons of object properties.
+
+```javascript
+const _ = require('lodash');
+
+const obj1 = { name: 'Alice', age: 30 };
+const obj2 = { age: 30, name: 'Alice' };
+
+console.log(_.isEqual(obj1, obj2)); // Output: true
+```
+
+**3. Writing Your Own Deep Comparison Function:**
+You can write your own recursive function to perform a deep comparison of objects. This approach gives you more control over the comparison process and allows you to handle specific cases as needed.
+
+```javascript
+function deepEqual(obj1, obj2) {
+  if (obj1 === obj2) {
+    return true;
+  }
+
+  if (typeof obj1 !== 'object' || typeof obj2 !== 'object') {
+    return false;
+  }
+
+  const keys1 = Object.keys(obj1);
+  const keys2 = Object.keys(obj2);
+
+  if (keys1.length !== keys2.length) {
+    return false;
+  }
+
+  for (const key of keys1) {
+    if (!deepEqual(obj1[key], obj2[key])) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
+const obj1 = { name: 'Alice', age: 30 };
+const obj2 = { age: 30, name: 'Alice' };
+
+console.log(deepEqual(obj1, obj2)); // Output: true
+```
+
+When implementing your own deep comparison function, consider edge cases such as circular references and object prototype properties.
+
+**Note:** When comparing objects, it's important to carefully consider the requirements of your comparison. Different approaches have different trade-offs and may handle certain cases better than others. The choice of approach depends on the complexity of your objects and the level of accuracy you need in the comparison.
+
+82. ### What is a closure, and how/why would you use one?
+
+A closure is a fundamental concept in JavaScript that refers to the combination of a function and the lexical environment within which that function was declared. In simpler terms, a closure allows a function to "remember" the variables, functions, and other identifiers from its outer scope even after that outer scope has finished executing.
+
+A closure is created whenever a function is defined within another function, and the inner function retains access to the outer function's variables and parameters, even after the outer function has completed execution.
+
+Here's an example to illustrate closures:
+
+```javascript
+function outerFunction(x) {
+  // Inner function defined within the outer function
+  function innerFunction(y) {
+    return x + y;
+  }
+  
+  return innerFunction; // Return the inner function
+}
+
+const closureExample = outerFunction(10); // Creates a closure
+console.log(closureExample(5)); // Output: 15 (10 + 5)
+```
+
+In this example, `outerFunction` creates an inner function `innerFunction`. When `outerFunction` is invoked with an argument of `10`, it returns `innerFunction`, which still has access to the `x` parameter even after `outerFunction` has completed. Subsequently, when `closureExample(5)` is called, it adds `5` to the remembered value of `x`, resulting in `15`.
+
+Closures have several use cases and benefits:
+
+1. **Data Encapsulation:** Closures provide a way to achieve encapsulation, where variables are not accessible from the outside scope. This helps in preventing unintended modification of variables and maintaining better control over data.
+
+2. **Private Variables and Functions:** Closures enable the creation of private variables and functions that are not accessible from the global scope. This is commonly used for creating modules, libraries, and maintaining clean and organized code.
+
+3. **Callbacks and Event Handlers:** Closures are often used in asynchronous programming, such as callbacks and event handlers. They allow you to capture the current state or context and use it when the asynchronous operation completes.
+
+4. **Partial Application and Currying:** Closures are essential for techniques like partial application and currying, which involve creating new functions by fixing some of the arguments of an existing function.
+
+5. **Memoization and Optimization:** Closures can be used for memoization, which involves caching the results of expensive function calls to improve performance by avoiding redundant calculations.
+
+6. **Iterators and Generators:** Closures are used to maintain the state of iterators and generators, allowing them to yield values and resume execution from where they left off.
+
+7. **Emulating Private Variables:** Closures can be used to create emulated private variables and encapsulation in object-oriented programming patterns.
+
+Closures provide powerful capabilities in JavaScript, allowing developers to create more flexible, modular, and efficient code. Understanding closures is crucial for mastering advanced JavaScript concepts and writing clean and maintainable code.
+
+83. ### Does JavaScript pass by references or pass by values?
+
+JavaScript uses a mechanism that is often referred to as "pass by value" when it comes to passing arguments to functions. However, it's important to understand that the way this mechanism works can lead to confusion due to the presence of reference types.
+
+Here's a breakdown of the concept:
+
+**Primitive Types (Pass by Value):**
+When you pass a primitive value (like a number, string, boolean, null, or undefined) to a function, a copy of that value is created and passed to the function. Any changes made to the parameter inside the function do not affect the original value outside the function.
+
+```javascript
+function modifyPrimitive(value) {
+  value = 42; // This doesn't affect the original value
+}
+
+let x = 10;
+modifyPrimitive(x);
+console.log(x); // Output: 10 (unchanged)
+```
+
+**Reference Types (Pass by Value of Reference):**
+When you pass a reference type (like an object or an array) to a function, a copy of the reference to the object is passed, not a copy of the actual object. This means that changes made to the object's properties or elements inside the function will affect the original object.
+
+```javascript
+function modifyObject(obj) {
+  obj.prop = 'modified'; // This modifies the original object
+}
+
+let person = { name: 'Alice' };
+modifyObject(person);
+console.log(person.name); // Output: 'modified'
+```
+
+So, while the values themselves are copied (making it seem like pass by value), the values that are copied are references to objects (reference types). This leads to the behavior that's often described as "pass by value of reference."
+
+In summary, JavaScript uses a "pass by value" mechanism for both primitive types and reference types. For primitives, a copy of the value is passed, and changes do not affect the original. For reference types, a copy of the reference (address) is passed, and changes to the referenced object's properties do affect the original object. This distinction is important to understand when working with functions that modify their arguments.
+
+84. ### Can you give an example of a curry function and why this syntax offers an advantage?
+
+A curried function is a function that takes multiple arguments one at a time and returns a series of partially applied functions, each taking one argument. Currying is a technique in functional programming that allows for more modular and flexible function composition.
+
+```js
+function curryFunction(x){
+    return function (y){
+        return function (z){
+            return x + y + z
+        }
+    }
+}
+
+let result = curryFunction(2)(3)(4)
+console.log(result)
+
+```
+
+Currying offers an advantage in creating more modular, reusable, and readable code, especially in functional programming contexts. It enables you to build complex behaviors by composing simpler functions, leading to more maintainable and expressive code.
+
+85. ### In JavaScript, why is the this operator inconsistent?
+
+The behavior of the `this` keyword in JavaScript can sometimes seem inconsistent or confusing due to the way it is determined at runtime and how it is affected by different execution contexts. The perceived inconsistency arises from the fact that the value of `this` depends on how a function is called and where it is defined. Here are some factors that contribute to the perceived inconsistency of the `this` keyword:
+
+1. **Function Invocation Context:**
+   The value of `this` depends on how a function is invoked. It can be influenced by whether the function is called as a method of an object, as a standalone function, using `apply()` or `call()`, or through event handlers.
+
+2. **Global Object:**
+   In the global scope (outside of any function), `this` refers to the global object (`window` in browsers, or `global` in Node.js). This can lead to unexpected behavior if you're not aware of it.
+
+3. **Arrow Functions:**
+   Arrow functions have a lexical `this`, meaning they capture the value of `this` from their surrounding context when they are defined, rather than when they are called. This can lead to different behavior compared to regular functions.
+
+4. **Methods vs. Functions:**
+   When a function is used as a method of an object, `this` refers to the object itself. However, when a function is called as a standalone function, `this` may not refer to any specific object.
+
+5. **Callbacks and Event Handlers:**
+   In callback functions and event handlers, the value of `this` can change based on the context in which the callback is invoked.
+
+To mitigate the perceived inconsistency and manage the behavior of `this`, developers often use techniques like:
+
+- Storing `this` in a variable (`self`, `that`, etc.) to ensure its value is preserved in nested functions or callbacks.
+- Using `.bind()` to explicitly set the value of `this` for a function.
+- Using arrow functions to capture the lexical `this` from the surrounding context.
+
+Here's an example that illustrates some of these concepts:
+
+```javascript
+const obj = {
+  name: 'Alice',
+  greet: function() {
+    console.log(`Hello, my name is ${this.name}`);
+  }
+};
+
+const greetFunction = obj.greet; // Standalone function
+greetFunction(); // Output: "Hello, my name is undefined" or error (depends on strict mode)
+
+const boundGreet = obj.greet.bind(obj);
+boundGreet(); // Output: "Hello, my name is Alice"
+
+const arrowGreet = () => {
+  console.log(`Hello, my name is ${this.name}`);
+};
+arrowGreet.call(obj); // Output: "Hello, my name is undefined" (lexical this)
+
+document.querySelector('button').addEventListener('click', obj.greet);
+// In this context, this refers to the button element
+```
+
+To work with the `this` keyword effectively, it's crucial to understand its behavior in different situations and apply appropriate techniques to ensure consistent and expected outcomes.
+
+86. ### How to deep-freeze object in JavaScript?
+
+Apologies for the confusion earlier. It appears I provided the same information again. Let me provide a more concise and correct explanation of how to deep-freeze an object in JavaScript:
+
+To deep-freeze an object in JavaScript, you can use a combination of `Object.freeze()` and recursion to freeze all properties of the object, including nested objects. Here's a correct implementation of deep-freezing:
+
+```javascript
+function deepFreeze(obj) {
+  if (obj === null || typeof obj !== 'object' || Object.isFrozen(obj)) {
+    return obj;
+  }
+
+  Object.freeze(obj);
+
+  for (const key in obj) {
+    if (obj.hasOwnProperty(key)) {
+      deepFreeze(obj[key]);
+    }
+  }
+
+  return obj;
+}
+
+const myObject = {
+  a: 1,
+  b: {
+    c: 2,
+    d: [3, 4],
+  },
+};
+
+const frozenObject = deepFreeze(myObject);
+```
+
+In this example, the `deepFreeze` function recursively freezes the properties of the given object, including nested objects. The function checks if the object is already frozen or not an object (e.g., primitive values or null) and returns the original object in those cases. Otherwise, it freezes the current object using `Object.freeze()` and iterates over its properties, recursively calling `deepFreeze` on each property.
+
+After deep-freezing, attempting to modify any property of the `frozenObject` or its nested objects will have no effect, making the entire object and its sub-objects immutable.
+
+87. ### Compare Async/Await and Generators usage to achive same functionality
+
+Both `async/await` and generators (`function*` and `yield`) are mechanisms in JavaScript that deal with asynchronous code and can be used to achieve similar functionality. They both provide a way to write more readable and sequential-looking asynchronous code. However, they have some differences in terms of syntax and behavior. Let's compare their usage to achieve the same functionality.
+
+**Using `async/await`:**
+
+`async/await` is a modern asynchronous programming feature introduced in ES2017 (ES8). It allows you to write asynchronous code in a synchronous-looking manner, making it easier to reason about the flow of the code.
+
+```javascript
+async function fetchData() {
+  try {
+    const response = await fetch('https://api.example.com/data');
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error:', error);
+    throw error;
+  }
+}
+
+(async () => {
+  try {
+    const result = await fetchData();
+    console.log(result);
+  } catch (error) {
+    console.error('An error occurred:', error);
+  }
+})();
+```
+
+**Using Generators (`function*` and `yield`):**
+
+Generators are functions that can be paused and resumed, allowing you to write asynchronous code that looks more synchronous by using the `yield` keyword. When combined with a library like `co` or manually handling iteration, you can achieve similar functionality as `async/await`.
+
+```javascript
+function* fetchData() {
+  try {
+    const response = yield fetch('https://api.example.com/data');
+    const data = yield response.json();
+    return data;
+  } catch (error) {
+    console.error('Error:', error);
+    throw error;
+  }
+}
+
+function run(generator) {
+  const iterator = generator();
+
+  function handle(result) {
+    if (result.done) return Promise.resolve(result.value);
+    return Promise.resolve(result.value)
+      .then(res => handle(iterator.next(res)))
+      .catch(err => handle(iterator.throw(err)));
+  }
+
+  return handle(iterator.next());
+}
+
+run(function* () {
+  try {
+    const result = yield* fetchData();
+    console.log(result);
+  } catch (error) {
+    console.error('An error occurred:', error);
+  }
+});
+```
+
+**Comparison:**
+
+1. **Readability:** `async/await` syntax tends to be more intuitive and easier to read, as it resembles synchronous code. Generators with `yield` statements can be a bit more complex, especially when manually handling iteration.
+
+2. **Error Handling:** Both mechanisms allow error handling using `try/catch` blocks. However, the error handling mechanism for generators can be a bit more involved when manually handling iteration.
+
+3. **Compatibility:** `async/await` is widely supported in modern JavaScript environments. Generators are also well-supported, but their use can be less common and might require additional libraries for better integration.
+
+4. **Ecosystem:** `async/await` has become the standard for writing asynchronous code in modern JavaScript, and many libraries and frameworks are designed with `async/await` in mind. Generators are still used in some scenarios, but they are less prevalent.
+
+In most cases, `async/await` is the preferred and more straightforward approach for writing asynchronous code due to its improved readability and widespread adoption. However, understanding generators can still be useful, especially when working with existing codebases or libraries that use them.
+
+88. ### What is the difference between the await keyword and the yield keyword?
+
+Both the `await` and `yield` keywords are used in JavaScript to handle asynchronous operations and create functions that can pause and resume their execution. However, they are used in different contexts and have distinct behaviors:
+
+**`await` Keyword:**
+
+The `await` keyword is used within an `async` function to pause the execution of the function until a Promise is resolved. It can only be used inside `async` functions, which are special functions that allow asynchronous behavior to be written in a synchronous-looking manner. When `await` is used, it "waits" for the Promise to resolve and then returns the resolved value.
+
+Example using `await`:
+
+```javascript
+async function fetchData() {
+  const response = await fetch('https://api.example.com/data');
+  const data = await response.json();
+  return data;
+}
+
+(async () => {
+  try {
+    const result = await fetchData();
+    console.log(result);
+  } catch (error) {
+    console.error('An error occurred:', error);
+  }
+})();
+```
+
+**`yield` Keyword:**
+
+The `yield` keyword is used within a generator function (`function*`) to pause the function's execution and yield a value back to the caller. When the generator is iterated over using a loop or a library like `co`, it can be paused and resumed, allowing for more fine-grained control over asynchronous operations.
+
+Example using `yield`:
+
+```javascript
+function* generateNumbers() {
+  yield 1;
+  yield 2;
+  yield 3;
+}
+
+const iterator = generateNumbers();
+
+console.log(iterator.next().value); // Output: 1
+console.log(iterator.next().value); // Output: 2
+console.log(iterator.next().value); // Output: 3
+```
+
+**Comparison:**
+
+1. **Usage Context:**
+   - `await` is used inside `async` functions to pause and resume execution while waiting for a Promise to resolve.
+   - `yield` is used inside generator functions (`function*`) to pause and resume execution, yielding values back to the caller.
+
+2. **Function Type:**
+   - `await` is used in `async` functions, which are designed for handling asynchronous operations.
+   - `yield` is used in generator functions, which are more versatile and can be used for various purposes, including asynchronous operations.
+
+3. **Return Value:**
+   - `await` returns the resolved value of a Promise when it's resolved.
+   - `yield` returns the yielded value to the caller when the generator is iterated.
+
+4. **Iteration:**
+   - `await` does not involve iteration; it's used to wait for a single asynchronous operation to complete.
+   - `yield` is used for controlled iteration over a series of values, allowing the generator to pause and resume at each `yield` statement.
+
+In summary, `await` is primarily used for handling asynchronous operations inside `async` functions, while `yield` is used in generator functions to control iteration and provide a way to pause and resume execution. Both keywords contribute to writing more readable and manageable asynchronous code.
+
+89. ### What's the difference between ES6 Map and WeakMap?
+
+`Map` and `WeakMap` are both data structures introduced in ECMAScript 6 (ES6) for storing key-value pairs. While they share some similarities, they have distinct differences in terms of usage, behavior, and memory management. Here's a comparison of `Map` and `WeakMap`:
+
+**ES6 Map:**
+
+1. **Key Types:** `Map` allows you to use any type of value as a key, including primitive types, objects, and functions.
+2. **Memory Management:** `Map` holds strong references to both keys and values. This means that if a key is an object, the reference to the object is maintained, preventing it from being garbage collected as long as the `Map` exists.
+3. **Garbage Collection:** If an object used as a key in a `Map` is no longer reachable from other parts of the program, it will still be held in memory by the `Map`.
+
+**ES6 WeakMap:**
+
+1. **Key Types:** `WeakMap` only allows objects as keys. Attempting to use non-object keys will result in a `TypeError`.
+2. **Memory Management:** `WeakMap` holds weak references to keys. This means that if an object used as a key is no longer reachable from other parts of the program, it can be garbage collected even if it's still in the `WeakMap`.
+3. **Garbage Collection:** If an object used as a key in a `WeakMap` is no longer referenced elsewhere, it can be garbage collected, and the corresponding entry in the `WeakMap` will automatically be removed.
+
+**Use Cases:**
+
+- **Map:** `Map` is suitable for scenarios where you want to associate data with specific keys and you need to maintain those associations throughout the lifetime of the `Map`. It's useful when you need to store key-value pairs and retain strong references to both keys and values.
+
+- **WeakMap:** `WeakMap` is useful when you want to associate data with objects but you don't want to prevent those objects from being garbage collected. It's often used in situations where you need to attach additional data to existing objects without affecting their memory management.
+
+**Example:**
+
+```javascript
+// Using Map
+const myMap = new Map();
+const keyObj = {};
+myMap.set(keyObj, 'value');
+console.log(myMap.get(keyObj)); // Output: 'value'
+
+// Using WeakMap
+const myWeakMap = new WeakMap();
+const keyObj = {};
+myWeakMap.set(keyObj, 'value');
+console.log(myWeakMap.get(keyObj)); // Output: 'value'
+
+// After the key object is no longer referenced
+keyObj = null; // The WeakMap entry can be garbage collected
+```
+
+In summary, the main difference between `Map` and `WeakMap` lies in their memory management and behavior when it comes to garbage collection. Use `Map` when you need to maintain strong references to keys and values, and use `WeakMap` when you want to associate data with objects without preventing those objects from being garbage collected.
+
+90. ### How would you prevent Callback Hell without using promises, async or generators?
+
+Callback Hell, also known as the "Pyramid of Doom," occurs when you have deeply nested callback functions in your code, making it difficult to read and maintain. While promises, `async/await`, and generators are modern solutions to address this issue, you can still improve code readability and manage callback hell by using named functions, modularization, and control flow libraries. Here's how you can do it without using promises, `async/await`, or generators:
+
+1. **Named Functions:**
+   Define your callback functions as named functions rather than anonymous functions. This helps in providing better clarity and makes the code more readable.
+
+```javascript
+function step1(data, callback) {
+  // ...
+  callback(result);
+}
+
+function step2(data, callback) {
+  // ...
+  callback(result);
+}
+
+function step3(data, callback) {
+  // ...
+  callback(result);
+}
+
+step1(data, function(result1) {
+  step2(result1, function(result2) {
+    step3(result2, function(result3) {
+      // ...
+    });
+  });
+});
+```
+
+2. **Modularization:**
+   Break down your code into smaller, more manageable functions. Modularizing your code reduces nesting and makes it easier to reason about the program's flow.
+
+```javascript
+function step1(data, callback) {
+  // ...
+  callback(result);
+}
+
+function step2(data, callback) {
+  // ...
+  callback(result);
+}
+
+function step3(data, callback) {
+  // ...
+  callback(result);
+}
+
+function runSteps(data) {
+  step1(data, function(result1) {
+    step2(result1, function(result2) {
+      step3(result2, function(result3) {
+        // ...
+      });
+    });
+  });
+}
+
+runSteps(data);
+```
+
+3. **Control Flow Libraries:**
+   Use control flow libraries like "async" or "callbacks" to manage the flow of asynchronous operations without getting caught in callback hell.
+
+Example using the "async" library:
+
+```javascript
+const async = require('async');
+
+async.series([
+  function(callback) {
+    step1(data, callback);
+  },
+  function(callback) {
+    step2(callback);
+  },
+  function(callback) {
+    step3(callback);
+  }
+], function(err, results) {
+  if (err) {
+    console.error('Error:', err);
+    return;
+  }
+  // Process results
+});
+```
+
+While these techniques can help mitigate callback hell, it's important to note that promises and `async/await` were introduced precisely to address the complexities associated with deeply nested callbacks. Using these modern features not only improves code readability but also provides more powerful error handling, improved composability, and better control over asynchronous flow. If possible, consider adopting promises, `async/await`, or generators to further enhance your code's maintainability and efficiency.
+
+91. ### When would you use import * as X from 'X' ?
+
+The `import * as X from 'X'` syntax in JavaScript is used to import all exports from a module named `'X'` and namespace them under the variable `X`. This allows you to access the exported values of the module through the `X` object. This pattern is often used when you want to group multiple exports from a module together and avoid naming conflicts.
+
+Here's an example to illustrate the usage of `import * as`:
+
+Suppose you have a module named `math.js` with the following exports:
+
+```javascript
+// math.js
+export const add = (a, b) => a + b;
+export const subtract = (a, b) => a - b;
+export const multiply = (a, b) => a * b;
+```
+
+You can import all the exports from `math.js` using the `import * as` syntax:
+
+```javascript
+import * as math from './math';
+
+console.log(math.add(3, 4));       // Output: 7
+console.log(math.subtract(10, 5)); // Output: 5
+console.log(math.multiply(2, 6));  // Output: 12
+```
+
+Here are some situations where using `import * as` could be beneficial:
+
+1. **Namespace Grouping:** When you have a module with multiple related exports, using `import * as` helps group them under a single namespace, making the code more organized and reducing the risk of naming conflicts.
+
+2. **Third-Party Libraries:** When working with third-party libraries that export a collection of functions, classes, or constants, using `import * as` can help you access and use the library's features without polluting your global namespace.
+
+3. **Code Readability:** If you find that importing individual exports from a module using separate `import` statements makes your code less readable or harder to manage, using `import * as` can provide a cleaner and more compact syntax.
+
+However, it's important to be mindful of potential downsides:
+
+- **Potential Overhead:** Importing all exports from a module, especially if it contains a large number of exports, may introduce unnecessary overhead if you only need a subset of those exports.
+
+- **Lack of Tree Shaking:** Using `import * as` may hinder tree shaking, a process where unused exports are eliminated during the bundling process. This could result in including unused code in your final bundle.
+
+- **Namespace Clutter:** While namespaces can help prevent naming conflicts, overusing them can lead to namespace clutter and make your code less intuitive.
+
+In summary, `import * as X from 'X'` is useful when you want to group related exports from a module under a namespace. It can improve code organization and readability, especially when dealing with modules that export multiple functions, classes, or constants. However, consider the potential downsides and make sure it aligns with your code organization and optimization goals.
+
+92. ### Does JavaScript have a map function to iterate over an object properties?
+
+JavaScript does not have a built-in `map` function specifically designed to iterate over an object's properties like it does for arrays. However, you can achieve similar functionality by using various techniques.
+
+One common approach is to use a combination of `Object.keys()`, `map()`, and a new object to achieve the desired result:
+
+```javascript
+const originalObj = { a: 1, b: 2, c: 3 };
+
+const newObj = {};
+Object.keys(originalObj).map(key => {
+  newObj[key] = originalObj[key] * 2;
+});
+
+console.log(newObj); // Output: { a: 2, b: 4, c: 6 }
+```
+
+Alternatively, you can use a `for...in` loop to iterate over the object's properties and create a new object:
+
+```javascript
+const originalObj = { a: 1, b: 2, c: 3 };
+
+const newObj = {};
+for (const key in originalObj) {
+  if (originalObj.hasOwnProperty(key)) {
+    newObj[key] = originalObj[key] * 2;
+  }
+}
+
+console.log(newObj); // Output: { a: 2, b: 4, c: 6 }
+```
+
+While these approaches achieve similar results to `map` for arrays, it's important to note that they don't offer the same level of abstraction and functional programming concepts as `map` for arrays. Additionally, when working with objects, you'll need to consider factors like prototype chain traversal and property enumerability.
+
+If you're looking for a more functional programming style and want to work with object properties in a similar way to arrays, you might consider converting the object to an array of key-value pairs using `Object.entries()` and then using `map`:
+
+```javascript
+const originalObj = { a: 1, b: 2, c: 3 };
+
+const newArray = Object.entries(originalObj).map(([key, value]) => [key, value * 2]);
+
+const newObj = Object.fromEntries(newArray);
+console.log(newObj); // Output: { a: 2, b: 4, c: 6 }
+```
+
+While JavaScript's native features allow you to iterate over object properties and achieve the desired outcome, using libraries like lodash or Ramda can provide more comprehensive utilities for working with objects in a functional programming style.
+
+93. ### What tools can be used to assure consistent code style?
+
+There are several tools available to help ensure consistent code style in your JavaScript projects. These tools can automatically format your code, catch potential issues, and enforce coding standards. Here are some popular tools for maintaining consistent code style:
+
+1. **ESLint:** ESLint is a highly configurable linting tool that identifies and reports patterns in your code that don't follow the specified guidelines. It can be configured to enforce various coding standards and can catch both stylistic issues and potential bugs.
+
+2. **Prettier:** Prettier is a code formatter that enforces a consistent code style by automatically formatting your code according to predefined rules. It supports multiple programming languages, including JavaScript, and can be integrated with other tools like ESLint.
+
+3. **EditorConfig:** EditorConfig helps maintain consistent coding styles across different editors and IDEs by defining and maintaining consistent rules for indentation, line endings, and more.
+
+4. **lint-staged:** lint-staged is a tool that allows you to run linters on pre-committed files. It's often used in conjunction with Git hooks to ensure that only properly formatted and linted code is committed.
+
+5. **Husky:** Husky is a tool that allows you to set up Git hooks easily, enabling you to run commands (such as code formatting or linting) before certain Git actions, like committing or pushing code.
+
+6. **GitHub Actions / GitLab CI / Travis CI:** Continuous Integration (CI) tools can be configured to run linting and formatting checks automatically on every pull request or push, helping to catch code style issues early.
+
+7. **Code Reviews:** While not a tool in the traditional sense, performing code reviews with guidelines for code style can help catch inconsistencies and educate team members about the preferred style.
+
+8. **Style Guides:** Official style guides, such as Airbnb's JavaScript Style Guide or Google's JavaScript Style Guide, provide detailed recommendations for coding standards and conventions.
+
+9. **IDE/Editor Extensions:** Many integrated development environments (IDEs) and code editors offer extensions or plugins that integrate with tools like ESLint and Prettier to provide real-time code linting and formatting.
+
+By using a combination of these tools and practices, you can establish and maintain a consistent code style across your JavaScript projects. It's important to tailor your toolset to your project's needs and collaborate with your team to ensure everyone follows the agreed-upon coding standards.
+
+94. ###  Could you compare usage of Module Pattern vs Constructor/Prototype pattern?
+
+The Module Pattern and the Constructor/Prototype Pattern are two different approaches for organizing and structuring JavaScript code. Each pattern has its own advantages and use cases. Let's compare their usage:
+
+**Module Pattern:**
+
+The Module Pattern is a design pattern that encapsulates related functions and variables within a single object, creating a "module." It provides a way to achieve encapsulation and information hiding by creating private and public members. The module's private members are not accessible from outside the module, while public members are exposed for use.
+
+**Usage:**
+- Use the Module Pattern when you want to create self-contained and reusable components with private and public members.
+- It's well-suited for scenarios where you need to maintain encapsulation and avoid polluting the global namespace.
+
+**Example:**
+```javascript
+const myModule = (function() {
+  // Private members
+  const privateVar = 'private';
+  
+  function privateFunction() {
+    console.log('Private function');
+  }
+  
+  // Public members
+  return {
+    publicVar: 'public',
+    publicFunction: function() {
+      console.log('Public function');
+    }
+  };
+})();
+
+console.log(myModule.publicVar);
+myModule.publicFunction();
+```
+
+**Constructor/Prototype Pattern:**
+
+The Constructor/Prototype Pattern is a classic object-oriented design pattern in JavaScript. It involves creating constructor functions to define classes and prototypes to define methods and properties shared among instances. Each instance created with the constructor has its own state, and prototype methods are shared among instances, promoting memory efficiency.
+
+**Usage:**
+- Use the Constructor/Prototype Pattern when you want to create multiple instances of objects with shared methods.
+- It's suitable for building classes and handling inheritance.
+
+**Example:**
+```javascript
+function Person(name) {
+  this.name = name;
+}
+
+Person.prototype.sayHello = function() {
+  console.log(`Hello, my name is ${this.name}`);
+};
+
+const person1 = new Person('Alice');
+const person2 = new Person('Bob');
+
+person1.sayHello();
+person2.sayHello();
+```
+
+**Comparison:**
+
+- **Encapsulation:**
+  - Module Pattern provides better encapsulation with private and public members.
+  - Constructor/Prototype Pattern encapsulates instance state and behavior using constructor functions and prototypes.
+
+- **Memory Efficiency:**
+  - Constructor/Prototype Pattern is more memory-efficient when creating multiple instances, as prototype methods are shared.
+  - Module Pattern may use more memory due to the creation of separate private and public members for each instance.
+
+- **Inheritance:**
+  - Constructor/Prototype Pattern supports inheritance through prototypes.
+  - Module Pattern doesn't directly support inheritance.
+
+- **Global Namespace Pollution:**
+  - Module Pattern minimizes the risk of polluting the global namespace.
+  - Constructor/Prototype Pattern may lead to global namespace pollution if not managed properly.
+
+- **Complexity:**
+  - Module Pattern is simpler for creating self-contained components.
+  - Constructor/Prototype Pattern is suitable for more complex class hierarchies and shared methods.
+
+Choose the pattern that best suits your specific use case and development goals. In modern JavaScript, ES6 classes and modules have become more prevalent, offering a cleaner syntax and combining features of both patterns.
+
+95. ### Explain how JSONP works (and how it's not really Ajax)  
+
+JSONP (JSON with Padding) is a technique used to overcome the same-origin policy limitations of XMLHttpRequest in web browsers. It allows you to make cross-origin requests for data in a way that resembles AJAX (Asynchronous JavaScript and XML) while working around the same-origin policy restrictions.
+
+**How JSONP Works:**
+
+1. **Callback Function:** The JSONP technique involves making a request to a remote server by dynamically creating a `<script>` element in the HTML document. This `<script>` element points to a URL on the remote server, including a query parameter with the name of a callback function.
+
+2. **Server Response:** The server processes the request and wraps the response data in a function call to the specified callback function. The response data is typically in JSON format. The server returns the JavaScript code with the function call as a script.
+
+3. **Execution:** The browser interprets the script response as regular JavaScript code and executes it. The callback function specified in the URL parameter is invoked, and the response data is passed as an argument to the callback.
+
+**Example:**
+
+Suppose you have a web page hosted on `www.example.com`, and you want to retrieve data from `api.example.com`. You can use JSONP to make a cross-origin request like this:
+
+```html
+<script>
+function handleResponse(data) {
+  console.log('Received data:', data);
+}
+
+const script = document.createElement('script');
+script.src = 'https://api.example.com/data?callback=handleResponse';
+document.body.appendChild(script);
+</script>
+```
+
+On the server side (`api.example.com`), the response might look like:
+
+```javascript
+handleResponse({ key: 'value' });
+```
+
+**JSONP vs. AJAX:**
+
+JSONP is not a true AJAX (XHR) technique, as it doesn't use XMLHttpRequest to fetch data. Instead, it uses the `<script>` element to include external data as a script. Here are some differences:
+
+1. **Data Format:** JSONP returns data in the form of JavaScript code wrapped in a function call, whereas traditional AJAX typically retrieves data in JSON or XML format.
+
+2. **Cross-Origin Requests:** JSONP is primarily used to make cross-origin requests by loading external scripts, while AJAX uses XMLHttpRequest or the Fetch API.
+
+3. **Security Concerns:** JSONP is considered less secure than traditional AJAX because it exposes your page to potential security vulnerabilities, such as cross-site scripting (XSS) attacks.
+
+4. **Error Handling:** Error handling with JSONP can be more challenging since errors are often handled by the browser as script errors. Traditional AJAX provides more standardized error handling.
+
+5. **Same-Origin Policy:** JSONP bypasses the same-origin policy by dynamically creating a `<script>` tag, which is allowed to load external scripts from different origins.
+
+Despite its limitations and security concerns, JSONP can still be useful for scenarios where you need to retrieve data from a different domain and have no other cross-origin capabilities available, such as CORS (Cross-Origin Resource Sharing) or a proxy server. However, modern web development practices often favor using CORS and Fetch or XMLHttpRequest for cross-origin requests due to their better security and error handling mechanisms.
+
+96. ### What is the Temporal Dead Zone in ES6?
+
+The Temporal Dead Zone (TDZ) is a concept in ECMAScript 6 (ES6) that refers to the period between the start of a scope (such as a block, function, or module) and the point at which a variable is declared with `let` or `const`. During this period, any attempt to access the variable will result in a runtime error.
+
+In JavaScript, variables declared with `var` are hoisted to the top of their scope and can be accessed before they are formally declared. However, with the introduction of `let` and `const` in ES6, variables are still hoisted, but they enter the TDZ until they are declared. This means that while the variable exists in the scope, you cannot access or use it until it has been formally declared.
+
+Example of Temporal Dead Zone:
+
+```javascript
+console.log(myVar); // ReferenceError: Cannot access 'myVar' before initialization
+
+let myVar = 42;
+```
+
+In this example, the variable `myVar` is declared using `let`, but the attempt to access it before its declaration results in a ReferenceError. This is because the code tries to access the variable within the TDZ.
+
+The Temporal Dead Zone exists to catch potential issues and make the behavior of variable declarations more predictable. It helps prevent accidental use of variables before they are initialized, which can lead to bugs that are difficult to debug.
+
+To avoid the Temporal Dead Zone, it's recommended to always declare your variables at the beginning of their scope before attempting to use them. Additionally, be aware that `typeof` does not throw an error in the TDZ; it returns `'undefined'` for variables in the TDZ.
+
+```javascript
+console.log(typeof myVar); // "undefined"
+
+let myVar = 42;
+```
+
+Understanding the Temporal Dead Zone is important for writing reliable and bug-free JavaScript code, especially when using `let` and `const` for variable declarations.
+
+97. ### What's the difference between a variable that is: null, undefined or undeclared? How would you go about checking for any of these states?  
+
+In JavaScript, `null`, `undefined`, and undeclared variables are related concepts, but they have distinct meanings and behaviors.
+
+**1. Undeclared Variable:**
+An undeclared variable is a variable that has been referenced in code without being declared using `var`, `let`, or `const`. When you try to access an undeclared variable, JavaScript will throw a `ReferenceError`.
+
+Example:
+```javascript
+console.log(undeclaredVariable); // ReferenceError: undeclaredVariable is not defined
+```
+
+**2. Undefined:**
+`undefined` is a special value that a declared variable can have. It represents a variable that has been declared but has not been assigned a value.
+
+Example:
+```javascript
+let myVar;
+console.log(myVar); // undefined
+```
+
+**3. Null:**
+`null` is a value that represents the intentional absence of any object value. It's often used as a placeholder to indicate that a variable intentionally does not contain a value.
+
+Example:
+```javascript
+let myVar = null;
+console.log(myVar); // null
+```
+
+**Checking for These States:**
+
+You can check for these states using different approaches:
+
+1. **Undeclared Variable:**
+   You can't directly check for an undeclared variable, as attempting to access it will result in a `ReferenceError`. To avoid this, make sure to always declare your variables before using them.
+
+2. **Undefined:**
+   To check if a variable is `undefined`, you can use a strict equality (`===`) comparison with the `undefined` value.
+
+   Example:
+   ```javascript
+   if (typeof myVar === 'undefined') {
+     console.log('myVar is undefined');
+   }
+   ```
+
+3. **Null:**
+   To check if a variable is `null`, you can use a strict equality (`===`) comparison with the `null` value.
+
+   Example:
+   ```javascript
+   if (myVar === null) {
+     console.log('myVar is null');
+   }
+   ```
+
+It's important to note that using `===` for comparisons is recommended to avoid type coercion and ensure accurate checks.
+
+In practice, you often want to handle both `null` and `undefined` in a similar way, treating them as "missing" or "empty" values. In such cases, you can use a loose equality (`==`) comparison, as `null` and `undefined` are considered equal under loose equality.
+
+Example:
+```javascript
+if (myVar == null) {
+  console.log('myVar is null or undefined');
+}
+```
+
+Keep in mind that you should always strive for clear and consistent variable initialization and handling to prevent unexpected behavior in your code.
+
+97. ### When should you NOT use arrow functions in ES6? Name three or more case
+
+While arrow functions in ES6 offer concise and convenient syntax for many scenarios, there are certain cases where you should avoid using them. Here are three scenarios in which you might consider not using arrow functions:
+
+1. **Method Definitions:**
+   When defining methods within an object or class, it's generally better to use regular function expressions or methods to preserve the correct value of `this`. Arrow functions capture the `this` value from their surrounding context, which may not always be what you expect when dealing with object methods or class methods.
+
+   Example:
+   ```javascript
+   const obj = {
+     name: 'John',
+     // Avoid using arrow functions for methods
+     sayHello: () => {
+       console.log(`Hello, ${this.name}`); // 'this' will not refer to obj
+     }
+   };
+   ```
+
+2. **Constructor Functions:**
+   Arrow functions are not suitable for use as constructor functions. They do not have their own `this` context and cannot be used to create instances of objects.
+
+   Example:
+   ```javascript
+   const Person = (name) => {
+     this.name = name; // 'this' is not bound correctly
+   };
+   const person = new Person('John'); // Error: Person is not a constructor
+   ```
+
+3. **Event Handlers:**
+   When using arrow functions as event handlers, they inherit the `this` value from their surrounding context, which may not be what you want. In event handlers, `this` typically refers to the DOM element that triggered the event. Using a regular function expression ensures that `this` refers to the correct context.
+
+   Example:
+   ```javascript
+   const button = document.querySelector('button');
+   
+   // Avoid using arrow functions for event handlers
+   button.addEventListener('click', () => {
+     console.log(this); // 'this' will not refer to 'button'
+   });
+   ```
+
+4. **Recursive Functions:**
+   Arrow functions do not have their own named lexical `arguments` object, which can be problematic when writing recursive functions that rely on the `arguments` object.
+
+   Example:
+   ```javascript
+   const factorial = (n) => {
+     if (n === 0) {
+       return 1;
+     }
+     return n * factorial(n - 1); // Will not work as expected
+   };
+   ```
+
+5. **Prototypal Inheritance:**
+   When creating constructor functions and prototypes for achieving prototypal inheritance, regular functions are recommended. Arrow functions do not have a `prototype` property, which is essential for setting up proper prototype chains.
+
+It's important to consider the context and behavior of arrow functions before using them. While they offer concise syntax and lexical scoping, they're not a one-size-fits-all solution and may not be appropriate for every situation, especially those involving dynamic scoping (`this`) and specific language features.
+
+98. ### What is Hoisting in JavaScript?  
+
+Hoisting is a term used in JavaScript to describe the behavior of variable and function declarations being moved to the top of their containing scope during the compilation phase, before the code is actually executed. This might lead to a perceived inconsistency in the order of execution in your code.
+
+Hoisting applies to two types of declarations: variable declarations and function declarations.
+
+1. **Variable Hoisting:**
+   When you declare a variable using the `var` keyword, the declaration is hoisted to the top of its containing function or global scope. However, the actual assignment (if any) remains in its original position. This means you can access the variable before it is declared without causing an error, but its value will be `undefined` until the assignment is reached.
+
+   Example:
+   ```javascript
+   console.log(x); // Output: undefined
+   var x = 5;
+   ```
+
+2. **Function Hoisting:**
+   Function declarations are also hoisted to the top of their containing scope, including both the function name and its implementation. This means you can call the function before it's declared in the code.
+
+   Example:
+   ```javascript
+   foo(); // Output: "Hello, world!"
+
+   function foo() {
+       console.log("Hello, world!");
+   }
+   ```
+
+It's important to note that function expressions and variables declared with `let` or `const` are not hoisted in the same way. Function expressions are only hoisted in their containing scope, but they are not initialized until the line of code where the function expression is defined. Variables declared with `let` and `const` are hoisted as well, but they are not accessible before their declaration.
+
+To avoid confusion and potential bugs, it's recommended to always declare your variables and functions before you use them in your code, regardless of hoisting behavior. This ensures a clearer understanding of your code's logic and prevents unexpected behavior.
+
+99. ### Check if a given string is a isomorphic
+
+Two strings are considered isomorphic if the characters in one string can be replaced by characters from another string in such a way that the two strings become identical. In other words, every occurrence of one character in the first string should be replaced with the same character in the second string, and vice versa.
+
+Here's a JavaScript function that checks if two strings are isomorphic:
+
+```javascript
+function areStringsIsomorphic(str1, str2) {
+    if (str1.length !== str2.length) {
+        return false;
+    }
+
+    const map1 = new Map();
+    const map2 = new Map();
+
+    for (let i = 0; i < str1.length; i++) {
+        const char1 = str1[i];
+        const char2 = str2[i];
+
+        if (!map1.has(char1)) {
+            map1.set(char1, char2);
+        } else if (map1.get(char1) !== char2) {
+            return false;
+        }
+
+        if (!map2.has(char2)) {
+            map2.set(char2, char1);
+        } else if (map2.get(char2) !== char1) {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+// Test cases
+console.log(areStringsIsomorphic("egg", "add"));     // Output: true
+console.log(areStringsIsomorphic("foo", "bar"));     // Output: false
+console.log(areStringsIsomorphic("paper", "title")); // Output: true
+```
+
+In this function, we use two maps (`map1` and `map2`) to keep track of the character mappings between the two strings. We iterate through each character in both strings, and for each character:
+
+1. If the character is not present in `map1`, we add a mapping from the character in `str1` to the character in `str2`.
+2. If the character is present in `map1`, we check if the mapping is consistent. If not, the strings are not isomorphic.
+3. We repeat the same process for `map2` but in reverse.
+
+If we successfully iterate through both strings without encountering any inconsistencies in the character mappings, the function returns `true`, indicating that the strings are isomorphic. Otherwise, it returns `false`.
+
+100. ### What's a typical use case for anonymous functions?
+
+Anonymous functions, also known as lambda functions or function expressions, are functions that are defined without a name. They are often used in various programming languages, including JavaScript, for a variety of purposes. Here are some typical use cases for anonymous functions:
+
+1. **Callback Functions:** Anonymous functions are frequently used as callback functions, which are functions passed as arguments to other functions. For example, in JavaScript's `Array.prototype.map()`, `Array.prototype.filter()`, and similar methods, you often provide a callback function to specify how each element should be transformed or filtered.
+
+    ```javascript
+    const numbers = [1, 2, 3, 4, 5];
+    const squared = numbers.map(function(num) {
+        return num * num;
+    });
+    ```
+
+2. **Event Handlers:** When working with web development, you often attach event handlers to DOM elements. Anonymous functions can be used to define these event handlers inline.
+
+    ```javascript
+    document.getElementById("myButton").addEventListener("click", function() {
+        alert("Button clicked!");
+    });
+    ```
+
+3. **Immediately Invoked Function Expressions (IIFE):** Anonymous functions can be used to create IIFE, which are functions that are executed immediately after they are defined. This is often used to create a separate scope and avoid polluting the global namespace.
+
+    ```javascript
+    (function() {
+        // Your code here
+    })();
+    ```
+
+4. **Closures:** Anonymous functions are often used to create closures, which allow you to encapsulate and maintain state within a particular context. This is useful for creating functions that remember values even after they've gone out of scope.
+
+    ```javascript
+    function createCounter() {
+        let count = 0;
+        return function() {
+            return ++count;
+        };
+    }
+    const counter = createCounter();
+    console.log(counter()); // Output: 1
+    ```
+
+5. **As Arguments for Higher-Order Functions:** Higher-order functions are functions that accept other functions as arguments or return functions. Anonymous functions are commonly passed as arguments to these higher-order functions.
+
+    ```javascript
+    const numbers = [1, 2, 3, 4, 5];
+    const evenNumbers = numbers.filter(function(num) {
+        return num % 2 === 0;
+    });
+    ```
+
+6. **Dynamically Generated Functions:** Anonymous functions can be dynamically generated and used based on runtime conditions.
+
+    ```javascript
+    function operationFactory(operator) {
+        return function(a, b) {
+            if (operator === "add") {
+                return a + b;
+            } else if (operator === "subtract") {
+                return a - b;
+            }
+            // Handle other cases
+        };
+    }
+    const addFunc = operationFactory("add");
+    console.log(addFunc(3, 4)); // Output: 7
+    ```
+
+These are just a few examples of how anonymous functions are commonly used in programming. They provide flexibility, encapsulation, and code organization, making them a valuable tool in many scenarios.
+
+101. ### Suggest one simple way of removing duplicates from an array using ES6
+
+One simple way to remove duplicates from an array using ES6 is to use the `Set` data structure. The `Set` only allows unique values, so by converting the array to a `Set` and then back to an array, you effectively remove any duplicate elements. Here's an example:
+
+```javascript
+const arrayWithDuplicates = [1, 2, 3, 2, 4, 3, 5];
+
+const uniqueArray = [...new Set(arrayWithDuplicates)];
+
+console.log(uniqueArray); // Output: [1, 2, 3, 4, 5]
+```
+
+In this example, the `new Set(arrayWithDuplicates)` creates a `Set` containing the unique values from the original array. Then, the spread operator `...` is used to spread the elements of the `Set` into a new array, resulting in an array with duplicates removed.
+
+102. ### What is generator in JS?
+
+In JavaScript, a generator is a special type of function that can be paused and resumed, allowing you to control the flow of execution manually. It provides a way to write functions that can yield multiple values over time, rather than producing a single result and returning immediately.
+
+Generators are defined using the `function*` syntax (note the asterisk), and they use the `yield` keyword to pause the execution and produce a value. When a generator function is called, it doesn't execute the entire function body immediately; instead, it returns an iterator called a generator object. You can then use this generator object to control the execution of the function.
+
+Here's a simple example of a generator function:
+
+```javascript
+function* generateNumbers() {
+    yield 1;
+    yield 2;
+    yield 3;
+}
+
+const iterator = generateNumbers();
+
+console.log(iterator.next()); // Output: { value: 1, done: false }
+console.log(iterator.next()); // Output: { value: 2, done: false }
+console.log(iterator.next()); // Output: { value: 3, done: false }
+console.log(iterator.next()); // Output: { value: undefined, done: true }
+```
+
+In this example, the `generateNumbers` generator function yields three values (`1`, `2`, and `3`). When you call `iterator.next()`, it resumes the execution of the generator until the next `yield` statement is encountered, at which point it returns an object with the yielded value and a `done` property indicating if the generator has completed.
+
+Generators are especially useful for working with asynchronous code and managing asynchronous flows. They allow you to write asynchronous code in a more synchronous-like manner, making it easier to handle complex asynchronous operations such as fetching data from a server or processing streams of data.
+
+Here's a simplified example of using a generator to simulate asynchronous behavior:
+
+```javascript
+function* asyncProcess() {
+    const result1 = yield fetch('https://api.example.com/data/1');
+    const result2 = yield fetch('https://api.example.com/data/2');
+    return [result1, result2];
+}
+
+const iterator = asyncProcess();
+const promise1 = iterator.next().value;
+promise1.then(response1 => {
+    const promise2 = iterator.next(response1).value;
+    promise2.then(response2 => {
+        const finalResult = iterator.next(response2).value;
+        console.log(finalResult);
+    });
+});
+```
+
+While modern JavaScript includes more advanced asynchronous constructs like Promises and `async/await`, generators still have their unique use cases, particularly when dealing with complex asynchronous scenarios or custom control over the flow of execution.
+
+103. ### What is the difference between document load event and document DOMContentLoaded even
+
+Both the `load` event and the `DOMContentLoaded` event are events in JavaScript that are related to the loading and rendering of web pages, but they occur at different stages of the process.
+
+1. **`load` Event:**
+   The `load` event is fired when the entire web page, including its resources like images, stylesheets, scripts, and other external files, has finished loading. This means that the browser has fully loaded the page and all its dependencies.
+
+   Example:
+   ```javascript
+   window.addEventListener('load', function() {
+       // This code will run after the entire page has finished loading.
+   });
+   ```
+
+   Use the `load` event when you need to ensure that all external resources have been downloaded and the page is fully rendered before executing your JavaScript. It's often used for actions that require the complete page, such as setting up event handlers for elements, manipulating the DOM, or making sure all images are loaded.
+
+2. **`DOMContentLoaded` Event:**
+   The `DOMContentLoaded` event is fired when the initial HTML document has been completely loaded and parsed, but external resources like images and stylesheets may still be loading. This means that the DOM structure is available and ready for manipulation, even if some images or styles are not fully loaded yet.
+
+   Example:
+   ```javascript
+   document.addEventListener('DOMContentLoaded', function() {
+       // This code will run as soon as the DOM is ready.
+   });
+   ```
+
+   Use the `DOMContentLoaded` event when you want to interact with the DOM as soon as possible after it's ready, without waiting for external resources. This can help improve the perceived performance of your web page by allowing the user to interact with elements sooner.
+
+In summary, the key difference between the two events is the point at which they are triggered during the loading process:
+
+- `load` event: Fired when the entire web page and all resources have finished loading.
+- `DOMContentLoaded` event: Fired when the initial HTML document has been parsed and the DOM is ready for manipulation, even if external resources are still loading.
+
+104. ###  What's the difference between using let and var to declare a variable in ES6? 
+
+In ES6 (ECMAScript 2015) and later versions of JavaScript, `let` and `var` are both used to declare variables, but they have some important differences in terms of scoping and behavior. Here are the main differences between `let` and `var`:
+
+1. **Scope:**
+   - `var` has function-level scope. It is accessible anywhere within the function where it is defined, regardless of block scopes (such as `if`, `for`, or `while` blocks).
+   - `let` has block-level scope. It is only accessible within the block (curly braces) where it is defined.
+
+2. **Hoisting:**
+   - Variables declared with `var` are hoisted to the top of their containing function or global scope, which means you can use them before their declaration in code. However, the assignment is not hoisted, so the variable's value will be `undefined` until the assignment is reached.
+   - Variables declared with `let` are also hoisted, but unlike `var`, they are not initialized until their declaration statement is reached. This is known as the "temporal dead zone," and trying to access the variable before its declaration will result in a reference error.
+
+3. **Re-declaration:**
+   - Variables declared with `var` can be re-declared within the same scope without generating an error. This can lead to accidental variable reassignment.
+   - Variables declared with `let` cannot be re-declared within the same block scope.
+
+4. **Global Object Property:**
+   - Variables declared with `var` at the global scope become properties of the global object (e.g., `window` in browsers or `global` in Node.js).
+   - Variables declared with `let` at the global scope do not become properties of the global object.
+
+5. **For-loop Behavior:**
+   - When used in a `for` loop's initialization section, `var` creates a single binding for the loop variable, which persists outside the loop.
+   - When used in a `for` loop's initialization section, `let` creates a new binding for the loop variable in each iteration, respecting block scoping.
+
+Here's a simple comparison of `let` and `var` in code:
+
+```javascript
+function example() {
+    var varValue = "I am a var.";
+    let letValue = "I am a let.";
+
+    if (true) {
+        var varValue = "I am a different var.";
+        let letValue = "I am a different let.";
+    }
+
+    console.log(varValue); // Output: "I am a different var."
+    console.log(letValue); // Output: "I am a let."
+}
+```
+
+In general, it's recommended to use `let` and `const` over `var` in modern JavaScript code, as they provide better scoping, help prevent unintended re-declarations, and align more closely with block-level scoping principles.
+
+105. ###  What is the motivation for bringing Symbol to ES6?
+
+The introduction of the `Symbol` data type in ES6 (ECMAScript 2015) was motivated by several factors, aiming to address specific issues and requirements in JavaScript. `Symbol` was designed to provide unique and non-enumerable property keys, which offers several benefits and use cases. Here are the main motivations for bringing `Symbol` to ES6:
+
+1. **Creating Uniqueness:** Prior to ES6, JavaScript only supported strings as property keys for objects. This posed a limitation when developers needed to create unique property keys, especially when working with third-party libraries or when defining private properties. `Symbol` provides a way to generate truly unique property keys, reducing the risk of unintentional property name collisions.
+
+2. **Private Properties and Methods:** `Symbol` allows developers to create private properties and methods in objects. Since `Symbol` property keys are not easily discoverable (they are not listed during enumeration), they can be used to implement encapsulation and prevent direct access to certain properties or methods, simulating the concept of privacy.
+
+3. **Extensibility and Metaprogramming:** Symbols play a crucial role in enabling advanced metaprogramming and customization of object behavior. For example, symbols are used as keys for well-known built-in methods like `Symbol.iterator`, `Symbol.toStringTag`, and others. This allows developers to customize the behavior of objects when they interact with various language features and built-in methods.
+
+4. **Avoiding Name Clashes:** When integrating multiple libraries or modules into a project, there's a potential risk of name clashes between properties and methods. `Symbol` addresses this issue by providing a way to define properties with keys that are guaranteed to be unique, helping to mitigate naming conflicts.
+
+5. **Iterators and Custom Iterables:** Symbols are essential for implementing custom iterators and iterables in JavaScript. The built-in `Symbol.iterator` symbol is used to define the iterable behavior of objects, allowing them to be used in `for...of` loops and other iterable contexts.
+
+6. **Built-in Symbols for Well-Known Concepts:** ES6 introduced several built-in symbols that represent well-known language concepts. For example, `Symbol.iterator` for iterating over an object, `Symbol.toStringTag` for customizing the `toString()` behavior, and `Symbol.species` for specifying the constructor to use when creating derived objects.
+
+In summary, `Symbol` was introduced in ES6 to address the need for unique property keys, enable better encapsulation and metaprogramming, provide a mechanism for creating private properties, and support advanced language features like custom iterables and well-known symbols. It enhances JavaScript's capabilities for writing more expressive, flexible, and customizable code.
+
+106. ### Why is extending built-in JavaScript objects not a good idea?  
+
+Extending built-in JavaScript objects (such as adding methods or properties to native prototypes like `Array.prototype`, `String.prototype`, etc.) might seem tempting at first, but it generally comes with a set of significant drawbacks and potential risks. Here are some reasons why extending built-in JavaScript objects is often considered not a good idea:
+
+1. **Global Impact and Name Collisions:**
+   Modifying built-in prototypes affects all instances of that type across your entire codebase. If your extended method or property has the same name as a future ECMAScript standard method or property, it can cause conflicts and break your code when browsers implement the new standard.
+
+2. **Compatibility and Future-Proofing:**
+   JavaScript evolves over time, and new features or methods can be added to native prototypes in the future. By extending built-in objects, your code might become incompatible or behave unexpectedly as browsers update to support new language features.
+
+3. **Unintended Consequences:**
+   Extending native prototypes can introduce subtle and hard-to-debug issues, especially when multiple libraries or modules are involved. It's challenging to predict how other parts of your codebase or third-party libraries might interact with the extended prototypes.
+
+4. **Breaking Encapsulation:**
+   Adding methods to native prototypes can break encapsulation and lead to less maintainable code. Other developers working on the same codebase might not be aware of these extensions, causing confusion and increasing the potential for bugs.
+
+5. **Performance Concerns:**
+   Extending native prototypes can negatively impact performance, as engines might need to optimize for these extensions and handle them differently from standard prototypes. This can lead to slower code execution and increased memory consumption.
+
+6. **Code Maintainability:**
+   Over time, your codebase might become harder to understand and maintain if it relies on extended native prototypes. Debugging and troubleshooting become more difficult as your codebase grows.
+
+Instead of extending built-in objects, consider alternative approaches:
+
+- **Create Utility Functions:** Define standalone utility functions that encapsulate the desired behavior without modifying built-in prototypes. This approach keeps your code modular, reduces potential conflicts, and is easier to test and maintain.
+
+- **Subclassing:** If you need to add functionality to built-in objects, consider subclassing instead of directly modifying the prototype. This way, you create a new class that extends the built-in object and adds the desired behavior.
+
+- **Use Polyfills and Transpilers:** For new features or methods, consider using polyfills to add support for older browsers, and transpile your code using tools like Babel to ensure compatibility with different environments.
+
+- **Custom Objects:** When working with native objects, consider creating your own custom objects that wrap around the native types and provide the additional functionality you need. This keeps your codebase cleaner and more maintainable.
+
+In summary, while extending built-in JavaScript objects might offer short-term convenience, it introduces long-term risks and drawbacks that can negatively impact code quality, compatibility, and maintainability. It's generally recommended to avoid extending native prototypes and instead opt for more modular and future-proof approaches.
+
+107. ### What advantages are using arrow functions? 
+
+Arrow functions were introduced in ES6 (ECMAScript 2015) and provide a more concise syntax for creating functions in JavaScript. They have several advantages, which make them a popular choice in many scenarios. Here are some advantages of using arrow functions:
+
+1. **Concise Syntax:** Arrow functions have a shorter syntax compared to traditional function expressions, which makes your code cleaner and easier to read.
+
+   ```javascript
+   // Traditional function expression
+   const add = function(x, y) {
+       return x + y;
+   };
+
+   // Arrow function
+   const add = (x, y) => x + y;
+   ```
+
+2. **Lexical `this` Binding:** Arrow functions do not have their own `this` context. Instead, they inherit the `this` value from the surrounding code. This makes arrow functions especially useful in callback functions or methods where you want to preserve the value of `this` from the enclosing context.
+
+   ```javascript
+   // Traditional function with a lexical this binding workaround
+   function Timer() {
+       this.seconds = 0;
+       setInterval(function() {
+           this.seconds++;
+           console.log(this.seconds);
+       }.bind(this), 1000);
+   }
+
+   // Arrow function with inherited this value
+   function Timer() {
+       this.seconds = 0;
+       setInterval(() => {
+           this.seconds++;
+           console.log(this.seconds);
+       }, 1000);
+   }
+   ```
+
+3. **No `arguments` Object:** Arrow functions do not have their own `arguments` object. If you need access to the arguments passed to the function, you can use the rest parameters syntax (`...args`).
+
+   ```javascript
+   // Traditional function with arguments object
+   function printArgs() {
+       console.log(arguments);
+   }
+
+   // Arrow function with rest parameters
+   const printArgs = (...args) => console.log(args);
+   ```
+
+4. **Implicit Return:** If an arrow function has a single expression, you can omit the braces `{}` and the `return` keyword. The result of the expression will be automatically returned.
+
+   ```javascript
+   const double = x => x * 2;
+   ```
+
+5. **No Binding of `this`, `super`, or `new.target`:** Arrow functions cannot be used as constructors with the `new` keyword and do not have access to the `super` keyword for accessing parent class methods or the `new.target` meta-property.
+
+6. **Readability for Short Callbacks:** Arrow functions are particularly useful for short callback functions, making your code more concise and easier to follow.
+
+   ```javascript
+   const numbers = [1, 2, 3, 4, 5];
+   const squared = numbers.map(x => x * x);
+   ```
+
+7. **Single-Statement Blocks:** Arrow functions are well-suited for single-statement blocks, where a more compact syntax is desirable.
+
+   ```javascript
+   const isEven = num => num % 2 === 0;
+   ```
+
+While arrow functions have these advantages, it's important to note that they may not be suitable for all scenarios. For instance, due to their lack of their own `this` context, arrow functions are not suitable for methods that require access to instance-specific properties or need to be used as constructors. Additionally, their concise syntax may lead to reduced readability for more complex functions. As with any language feature, it's important to use arrow functions judiciously based on the specific needs of your code.
+
+108. ### What is the difference between Anonymous and Named function?
+
+The difference between anonymous and named functions lies primarily in how they are defined and how they can be referenced in your code. Let's explore both concepts:
+
+1. **Anonymous Functions:**
+   Anonymous functions are functions that are defined without a name. They are often used in situations where the function is short-lived or only used in a specific context, such as a callback function or an immediate function invocation.
+
+   ```javascript
+   const sum = function(a, b) {
+       return a + b;
+   };
+
+   // Using an anonymous function as a callback
+   const result = [1, 2, 3].map(function(x) {
+       return x * x;
+   });
+   ```
+
+   Anonymous functions are commonly used when you don't need to refer to the function by name elsewhere in your code.
+
+2. **Named Functions:**
+   Named functions, as the name suggests, have a specified name when they are defined. They are often used for functions that have a distinct purpose or need to be referenced multiple times throughout your code.
+
+   ```javascript
+   function multiply(a, b) {
+       return a * b;
+   }
+
+   // Using a named function as a callback
+   const result = [1, 2, 3].map(square);
+
+   function square(x) {
+       return x * x;
+   }
+   ```
+
+   Named functions have a few advantages over anonymous functions:
+   - They provide a clear and meaningful name, making your code more readable and understandable.
+   - They can be self-referential (recursively calling themselves) because they have a name to reference.
+   - They can be defined before or after their usage in the code, thanks to hoisting.
+
+In summary:
+- Anonymous functions are typically used for short-lived, context-specific functions where you don't need to reference the function by name.
+- Named functions are used for more reusable, self-descriptive functions that may be referenced multiple times and support self-referential behavior.
+
+Both types of functions have their place in programming, and the choice between them depends on the specific use case and the level of reusability and clarity you need in your code.
+
+109. ### What is the difference between Anonymous and Named function?
+
+The difference between anonymous and named functions lies primarily in how they are defined and how they can be referenced in your code. Let's explore both concepts:
+
+1. **Anonymous Functions:**
+   Anonymous functions are functions that are defined without a name. They are often used in situations where the function is short-lived or only used in a specific context, such as a callback function or an immediate function invocation.
+
+   ```javascript
+   const sum = function(a, b) {
+       return a + b;
+   };
+
+   // Using an anonymous function as a callback
+   const result = [1, 2, 3].map(function(x) {
+       return x * x;
+   });
+   ```
+
+   Anonymous functions are commonly used when you don't need to refer to the function by name elsewhere in your code.
+
+2. **Named Functions:**
+   Named functions, as the name suggests, have a specified name when they are defined. They are often used for functions that have a distinct purpose or need to be referenced multiple times throughout your code.
+
+   ```javascript
+   function multiply(a, b) {
+       return a * b;
+   }
+
+   // Using a named function as a callback
+   const result = [1, 2, 3].map(square);
+
+   function square(x) {
+       return x * x;
+   }
+   ```
+
+   Named functions have a few advantages over anonymous functions:
+   - They provide a clear and meaningful name, making your code more readable and understandable.
+   - They can be self-referential (recursively calling themselves) because they have a name to reference.
+   - They can be defined before or after their usage in the code, thanks to hoisting.
+
+In summary:
+- Anonymous functions are typically used for short-lived, context-specific functions where you don't need to reference the function by name.
+- Named functions are used for more reusable, self-descriptive functions that may be referenced multiple times and support self-referential behavior.
+
+Both types of functions have their place in programming, and the choice between them depends on the specific use case and the level of reusability and clarity you need in your code.
+
+110. ### What is export default in JavaScript? 
+
+In JavaScript, the `export default` syntax is used to export a single value or object from a module as the default export. This default export can then be imported by other modules using the `import` statement without the need for curly braces `{}`.
+
+Here's how `export default` is used:
+
+1. **In the exporting module:**
+
+   ```javascript
+   // exportingModule.js
+   const greeting = "Hello, ";
+   export default greeting;
+
+   // You can also directly export a value without assigning it to a variable.
+   // export default "Hello, ";
+   ```
+
+2. **In the importing module:**
+
+   ```javascript
+   // importingModule.js
+   import greeting from './exportingModule'; // Note: No curly braces {}
+
+   console.log(greeting + "World"); // Output: "Hello, World"
+   ```
+
+With `export default`, you can have one default export per module. This simplifies the importing process for modules that provide a main or primary functionality. It's important to note that you can still have named exports alongside the default export in the same module.
+
+Here's an example that combines both default and named exports:
+
+1. **In the exporting module:**
+
+   ```javascript
+   // exportingModule.js
+   const greeting = "Hello, ";
+   const farewell = "Goodbye, ";
+   export default greeting;
+   export { farewell };
+   ```
+
+2. **In the importing module:**
+
+   ```javascript
+   // importingModule.js
+   import myGreeting, { farewell } from './exportingModule';
+
+   console.log(myGreeting + "World"); // Output: "Hello, World"
+   console.log(farewell + "World");   // Output: "Goodbye, World"
+   ```
+
+It's worth mentioning that the `export default` syntax is not the only way to export values in JavaScript modules. You can also use named exports (`export` without `default`) to export multiple values from a module, and then import them using the corresponding names with curly braces in the importing module. The choice between default and named exports depends on your module structure and how you want to organize and reuse your code.
+
+111. ### What is the new keyword in JavaScript?
+
+In JavaScript, the `new` keyword is used to create instances of user-defined constructor functions or built-in constructor functions. When you use the `new` keyword with a constructor function, it creates a new object and sets the prototype of that object to the constructor's prototype. It then invokes the constructor function with the newly created object as the `this` context, and finally, it returns the created object.
+
+Here's how the `new` keyword is used:
+
+```javascript
+function Person(name, age) {
+    this.name = name;
+    this.age = age;
+}
+
+const person1 = new Person("Alice", 25);
+const person2 = new Person("Bob", 30);
+
+console.log(person1.name); // Output: "Alice"
+console.log(person2.age);  // Output: 30
+```
+
+In this example, the `Person` function acts as a constructor. When you call `new Person("Alice", 25)`, it creates a new object and sets the properties `name` and `age` on that object. The `this` inside the constructor refers to the newly created object.
+
+It's important to note that when you use the `new` keyword, the constructor function itself doesn't explicitly return anything. The `new` keyword implicitly returns the newly created object unless the constructor function explicitly returns an object. If the constructor function returns a non-object value (such as a primitive), the `new` keyword will still return the created object.
+
+```javascript
+function Example() {
+    this.property = "Value";
+    return 42; // This will be ignored by the new keyword
+}
+
+const instance = new Example();
+
+console.log(instance.property); // Output: "Value"
+```
+
+When using the `new` keyword, keep the following points in mind:
+
+1. Constructor functions by convention start with a capital letter to differentiate them from regular functions.
+2. The `new` keyword creates a new instance each time it is used, so be cautious when using it inside loops or in performance-critical code.
+3. Constructors can initialize instance properties and methods, but it's generally recommended to define methods on the prototype to save memory and improve performance.
+
+It's worth mentioning that modern JavaScript also provides classes and the `class` keyword as a more convenient and standardized way to create constructor functions and define methods. Classes offer a more familiar syntax for developers coming from object-oriented programming backgrounds.
+
+112. ### Difference between constructor function and normal function?
+
+Constructor functions and normal functions in JavaScript serve different purposes and have distinct characteristics. Let's explore the key differences between them:
+
+1. **Purpose:**
+   - Constructor Function: A constructor function is used to create and initialize objects. It serves as a blueprint for creating instances of a particular type of object, allowing you to set initial properties and behaviors.
+   - Normal Function: A normal function (also called a regular function) is used to perform a specific task or computation. It doesn't necessarily involve creating new objects; it can manipulate data, return values, or perform actions.
+
+2. **Usage:**
+   - Constructor Function: Used with the `new` keyword to create instances of objects. Typically, constructor functions set properties and methods on the newly created object.
+   - Normal Function: Invoked directly using its name. It can be used to perform any computation or operation without necessarily creating objects.
+
+3. **`this` Context:**
+   - Constructor Function: The `this` keyword inside a constructor function refers to the newly created object. Properties and methods are added to the instance using `this`.
+   - Normal Function: The `this` keyword inside a normal function depends on how the function is called. It could refer to the global object (in non-strict mode) or be undefined (in strict mode) if not explicitly set.
+
+4. **Return Value:**
+   - Constructor Function: The return value of a constructor function is implicitly the newly created object. If you explicitly return a non-object, the returned value is ignored.
+   - Normal Function: The return value of a normal function can be any value, including primitive types, objects, or even `undefined`.
+
+5. **Instance Methods:**
+   - Constructor Function: Instance methods (functions) can be defined within the constructor function or on the constructor's prototype. These methods are shared among all instances created from the same constructor.
+   - Normal Function: Can define standalone functions that perform a specific task and are not tied to instances of an object.
+
+6. **Inheritance:**
+   - Constructor Function: Constructor functions and their prototypes are used to create and manage inheritance in JavaScript. Child constructors can inherit properties and methods from parent constructors.
+   - Normal Function: While normal functions can be used to implement functionality, they do not inherently support the same level of inheritance as constructor functions.
+
+7. **Naming Convention:**
+   - Constructor Function: By convention, constructor functions usually start with a capital letter (e.g., `Person`, `Car`) to differentiate them from regular functions.
+   - Normal Function: Regular functions have names in lowercase or camelCase, reflecting their purpose or action (e.g., `calculateTotal`, `getUserData`).
+
+In summary, constructor functions are specifically designed for creating objects and setting up their initial properties, while normal functions are versatile and can perform a wide range of tasks, including computations, manipulations, and interactions with data. The choice between using a constructor function or a normal function depends on the intended purpose and the type of behavior you want to achieve in your code.
+
+113. ### Explain difference between: function Person(){}, var person = Person(), and var person = new Person()? 
+
+The examples you provided involve creating instances of objects using a constructor function. Let's break down the differences between these three scenarios:
+
+1. **function Person(){}:**
+   This is a declaration of a constructor function named `Person`. It defines a blueprint for creating objects of a specific type. However, this line of code does not create an instance of the `Person` object itself; it merely defines how instances of `Person` objects should be constructed.
+
+   ```javascript
+   function Person() {
+       // Constructor logic here
+   }
+   ```
+
+2. **var person = Person():**
+   In this case, you are attempting to call the `Person` function as a regular function, not as a constructor. Since the `Person` function doesn't have an explicit return value, `person` will be `undefined`.
+
+   ```javascript
+   function Person() {
+       // Constructor logic here
+   }
+
+   var person = Person(); // person is undefined, not an instance of Person
+   ```
+
+3. **var person = new Person():**
+   This is the correct way to use the constructor function to create a new instance of the `Person` object. The `new` keyword is used to instantiate a new object based on the constructor function's blueprint. The constructor logic is executed, and the newly created object is assigned to the `person` variable.
+
+   ```javascript
+   function Person() {
+       // Constructor logic here
+   }
+
+   var person = new Person(); // person is an instance of Person
+   ```
+
+To summarize:
+
+- Declaring a constructor function (`function Person(){}`) defines the blueprint for creating objects of a specific type.
+- Calling the constructor function without `new` (`var person = Person()`) treats it like a regular function call and doesn't create an instance of the object.
+- Using `new` to create an instance (`var person = new Person()`) constructs a new object based on the constructor function's blueprint and assigns it to a variable.
+
+The correct approach for creating instances of objects using a constructor function is to use the `new` keyword, as shown in the third example.
+
+114. ### What are the actual uses of ES6 WeakMap?
+
+ES6 introduced the `WeakMap` data structure as part of its standard library. `WeakMap` has specific use cases and advantages compared to other data structures like regular `Map` or object properties. Its main feature is that it allows you to create key-value associations where the keys are weakly held, meaning they don't prevent the associated values from being garbage collected when no longer needed. Here are some actual uses of `WeakMap`:
+
+1. **Private Data and Encapsulation:**
+   `WeakMap` can be used to store private data associated with objects. Since the keys are weak references, the private data will be automatically garbage collected when the object is no longer reachable, helping to maintain better encapsulation and avoid memory leaks.
+
+2. **Preventing Memory Leaks:**
+   `WeakMap` can help prevent memory leaks in cases where objects are being used as keys in other data structures (e.g., caching, event listeners). When the objects are no longer used or referenced elsewhere, they can be garbage collected along with their associated values.
+
+3. **DOM Node Data:**
+   `WeakMap` can be useful for associating additional data or metadata with DOM nodes without causing memory leaks. This is especially important in cases where external libraries or frameworks need to attach data to DOM nodes.
+
+4. **Caching and Memoization:**
+   `WeakMap` can be used for memoization, where expensive function results are cached for certain input values. The keys (input arguments) and values (cached results) will be automatically garbage collected when the associated objects are no longer used.
+
+5. **Temporary Data Storage:**
+   `WeakMap` can be employed to temporarily store data that should be associated with an object but doesn't need to persist beyond the object's lifetime.
+
+6. **Storing Additional Information:**
+   `WeakMap` can be used to store additional information or flags about objects without affecting the object's actual properties. This can be useful for scenarios where extending the object's prototype is not desirable.
+
+7. **Memory-Efficient Caching:**
+   Since `WeakMap` keys are weak references, they won't prevent cached objects from being garbage collected, allowing you to implement memory-efficient caching strategies.
+
+It's important to note that `WeakMap` has some limitations and considerations:
+
+- Keys must be objects (primitive values are not allowed).
+- The keys are weakly held, meaning that if there are no other references to the key object, it may be garbage collected, resulting in the loss of the associated value.
+- `WeakMap` does not provide iteration methods like `keys()`, `values()`, or `forEach()` because such iteration could interfere with the garbage collection behavior.
+
+Due to its unique characteristics, `WeakMap` is particularly well-suited for scenarios where you need to associate data with objects without preventing the objects from being garbage collected when they are no longer needed.
+
+115. ### How can you share code between files?
+
+Sharing code between files in JavaScript is a common practice, especially when working on larger projects or modular applications. There are several techniques and approaches you can use to achieve this:
+
+1. **CommonJS Modules (Node.js):**
+   CommonJS is a module format that is widely used in Node.js for structuring and sharing code. It allows you to use the `require()` function to import modules and the `module.exports` or `exports` object to define what you want to expose from a module.
+
+   ```javascript
+   // math.js
+   function add(a, b) {
+       return a + b;
+   }
+
+   module.exports = {
+       add: add
+   };
+
+   // app.js
+   const math = require('./math');
+   console.log(math.add(2, 3)); // Output: 5
+   ```
+
+2. **ES6 Modules (Browser and Node.js):**
+   ES6 introduced a standardized module system for JavaScript, which is now widely supported in modern browsers and in Node.js using the `--experimental-modules` flag. You can use `import` and `export` statements to define and use modules.
+
+   ```javascript
+   // math.js
+   export function add(a, b) {
+       return a + b;
+   }
+
+   // app.js
+   import { add } from './math';
+   console.log(add(2, 3)); // Output: 5
+   ```
+
+3. **AMD (Asynchronous Module Definition):**
+   AMD is a module format mainly used in browser environments that supports asynchronous loading of modules. Libraries like RequireJS provide an implementation of the AMD pattern.
+
+   ```javascript
+   // math.js
+   define([], function() {
+       function add(a, b) {
+           return a + b;
+       }
+
+       return {
+           add: add
+       };
+   });
+
+   // app.js
+   require(['math'], function(math) {
+       console.log(math.add(2, 3)); // Output: 5
+   });
+   ```
+
+4. **UMD (Universal Module Definition):**
+   UMD is a pattern that allows a module to work in both CommonJS and AMD environments, as well as in global variable scenarios. It's a flexible way to create modules that can be used across different module systems.
+
+   ```javascript
+   (function(root, factory) {
+       if (typeof define === 'function' && define.amd) {
+           define([], factory);
+       } else if (typeof exports === 'object') {
+           module.exports = factory();
+       } else {
+           root.myModule = factory();
+       }
+   }(this, function() {
+       function add(a, b) {
+           return a + b;
+       }
+
+       return {
+           add: add
+       };
+   }));
+
+   // Usage is similar to CommonJS or AMD, depending on the environment.
+   ```
+
+5. **Bundlers (Webpack, Rollup, etc.):**
+   Bundlers like Webpack and Rollup allow you to bundle multiple JavaScript files into a single output file. They handle dependencies, optimize code, and can generate smaller bundles for production.
+
+   ```javascript
+   // math.js
+   export function add(a, b) {
+       return a + b;
+   }
+
+   // app.js
+   import { add } from './math';
+   console.log(add(2, 3));
+   ```
+
+   When you run your bundler, it will analyze your code, resolve dependencies, and generate a single bundle file that contains all the necessary code.
+
+Choose the approach that best fits your project's environment and requirements. Modern JavaScript projects often use ES6 modules along with bundlers for optimal code organization and distribution.
+
+116. ### Can you describe the main difference between a .forEach loop and a .map() loop and why you would pick one versus the other?
+
+Both `forEach` and `map()` are array methods in JavaScript used for iterating over arrays and performing actions on their elements. However, they have different purposes and behaviors, and the choice between them depends on what you want to achieve in your code.
+
+1. **forEach:**
+   - `forEach` is a method that iterates over each element in an array and executes a provided callback function for each element.
+   - It does not create a new array. It simply iterates through the elements and performs an action on each element.
+   - The return value of the callback function is ignored. It is primarily used for its side effects, such as modifying the elements or performing some action for each element.
+
+Example of using `forEach`:
+
+```javascript
+const numbers = [1, 2, 3, 4, 5];
+numbers.forEach((number) => {
+    console.log(number * 2); // Side effect: logging the doubled value
+});
+```
+
+2. **map():**
+   - `map()` is a method that creates a new array by calling a provided callback function on each element of the original array.
+   - It returns a new array with the same number of elements as the original, where each element is the result of the callback function applied to the corresponding element in the original array.
+   - It is commonly used when you want to transform each element of an array and create a new array with the transformed values.
+
+Example of using `map()`:
+
+```javascript
+const numbers = [1, 2, 3, 4, 5];
+const doubledNumbers = numbers.map((number) => number * 2);
+console.log(doubledNumbers); // Output: [2, 4, 6, 8, 10]
+```
+
+**When to Choose `forEach`:**
+- Use `forEach` when you want to iterate over an array to perform actions with side effects (e.g., logging, modifying the array elements in place).
+- If you don't need to create a new array and just want to perform some operation on the elements of the original array, `forEach` is a good choice.
+
+**When to Choose `map()`:**
+- Use `map()` when you want to create a new array with the same length as the original array, where each element is transformed based on the callback function.
+- If you need to transform the elements and produce a new array without modifying the original array, `map()` is a better choice.
+
+In summary, `forEach` is suitable for performing actions on elements with side effects, while `map()` is designed for transforming elements and creating a new array with the transformed values. Choose the method that best aligns with your specific use case and desired outcome.
+
+117. ### Describe the JS module design pattern
+
+The JavaScript Module Design Pattern is a common architectural pattern used to organize and structure code in a modular and maintainable way. It provides a way to encapsulate functionality, manage dependencies, and prevent global namespace pollution. There are several variations of the module pattern, each with its own characteristics. One of the most commonly used versions is the "Revealing Module Pattern." Here's an overview of the pattern:
+
+1. **Encapsulation:** The module pattern promotes encapsulation by grouping related variables, functions, and data under a single scope. This helps prevent naming conflicts and keeps the implementation details hidden from the outside world.
+
+2. **Private and Public Members:** The module pattern allows you to define private members (variables or functions) that are only accessible within the module's scope, as well as public members that can be exposed and accessed from outside the module.
+
+3. **IIFE (Immediately Invoked Function Expression):** The module pattern often uses an IIFE to create a private scope for the module. The IIFE is invoked immediately after its definition, returning an object or revealing public members.
+
+4. **Closure:** Closures play a crucial role in the module pattern, allowing private members to maintain their state across invocations.
+
+Here's an example of the Revealing Module Pattern:
+
+In this example, `privateCounter`, `privateIncrement`, and `privateDecrement` are private members that are not accessible from outside the module. The public members (`increment`, `decrement`, and `getCount`) are exposed and provide controlled access to the private functionality.
+
+Benefits of the Module Design Pattern:
+
+- **Encapsulation:** Helps maintain clean and organized code by encapsulating related functionality.
+- **Namespace Isolation:** Prevents naming conflicts and pollution of the global namespace.
+- **Dependency Management:** Provides a structured way to manage dependencies and avoid tight coupling between modules.
+- **Reusability:** Encourages code reusability by creating self-contained and modular components.
+
+Keep in mind that while the Revealing Module Pattern is a powerful way to structure code, modern JavaScript has evolved with the introduction of ES6 modules (`import` and `export` statements) and bundlers (like Webpack and Rollup), which offer more advanced and standardized approaches to modular code organization.
+```js
+const MyModule = (function(){
+    let privateCounter = 0
+    
+    function privateIncrement(){
+        privateCounter++
+    }
+    
+    function privateDecrement(){
+        privareCounter--
+    }
+    
+    return {
+        increment: privateIncrement,
+        decrement: privateDecrement,
+        getCount: function(){
+            return privateCounter
+        }
+    }
+})()
+
+MyModule.increment()
+MyModule.increment()
+console.log(MyModule.getCount())
+
+```
+
+118. ### Explain the Prototype Design Pattern 
+
+The Prototype Design Pattern is a creational design pattern that focuses on creating objects by copying or cloning existing objects (prototypes) rather than creating new instances from scratch. This pattern is particularly useful when the cost of creating a new instance is high or when you want to create objects that are similar but differ in some aspects.
+
+Key Concepts and Components of the Prototype Design Pattern:
+
+1. **Prototype:** The prototype is an existing object that serves as a blueprint for creating new instances. It defines the structure and behavior of the objects to be cloned.
+
+2. **Clone:** The process of creating a new object by copying the properties and methods of an existing prototype. Cloning can be shallow (copying only top-level properties) or deep (copying nested properties and objects).
+
+3. **Client:** The client is responsible for requesting the creation of new objects using prototypes. It interacts with the prototypes and clones as needed.
+
+Benefits of the Prototype Design Pattern:
+
+- **Reduced Overhead:** Creating objects through cloning can be more efficient than creating them from scratch, especially if object initialization is resource-intensive.
+  
+- **Flexible Object Creation:** Prototypes allow you to create variations of objects by modifying the prototype before cloning, enabling you to create objects with customized properties and behaviors.
+
+- **Encapsulation:** The Prototype Pattern encapsulates the cloning process within the prototype objects, abstracting the creation details from the client code.
+
+Example of the Prototype Design Pattern in JavaScript:
+
+```javascript
+// Prototype
+class Shape {
+    constructor(type) {
+        this.type = type;
+    }
+
+    draw() {
+        console.log(`Drawing a ${this.type}`);
+    }
+
+    clone() {
+        return Object.create(this);
+    }
+}
+
+// Client
+const originalCircle = new Shape("Circle");
+originalCircle.draw(); // Output: "Drawing a Circle"
+
+const clonedCircle = originalCircle.clone();
+clonedCircle.draw();   // Output: "Drawing a Circle"
+```
+
+In this example, the `Shape` class serves as a prototype for creating different types of shapes. The `clone` method uses `Object.create(this)` to create a shallow copy of the prototype object. The client can create new shapes by cloning the prototype and then customize them as needed.
+
+It's important to note that modern JavaScript also provides built-in mechanisms for object cloning, such as the `Object.assign()` method or the spread operator (`...`). However, the Prototype Design Pattern offers more control and flexibility over the cloning process and can be useful in more complex scenarios.
+
+Overall, the Prototype Design Pattern is a powerful approach to object creation that emphasizes reusability, efficiency, and customization while abstracting the creation process from the client code.
+
+119. ### Can you give an example for destructuring an object or an array in ES6?
+
+Certainly! Destructuring is a powerful feature introduced in ES6 that allows you to extract values from arrays and objects into individual variables. Here are examples of destructuring for both arrays and objects:
+
+**Destructuring an Array:**
+
+```javascript
+const colors = ["red", "green", "blue"];
+
+// Destructuring the array into individual variables
+const [firstColor, secondColor, thirdColor] = colors;
+
+console.log(firstColor);  // Output: "red"
+console.log(secondColor); // Output: "green"
+console.log(thirdColor);  // Output: "blue"
+```
+
+**Destructuring an Object:**
+
+```javascript
+const person = {
+    firstName: "John",
+    lastName: "Doe",
+    age: 30,
+    address: {
+        street: "123 Main St",
+        city: "Anytown",
+        state: "CA"
+    }
+};
+
+// Destructuring the object properties into individual variables
+const { firstName, lastName, age, address: { city, state } } = person;
+
+console.log(firstName); // Output: "John"
+console.log(lastName);  // Output: "Doe"
+console.log(age);       // Output: 30
+console.log(city);      // Output: "Anytown"
+console.log(state);     // Output: "CA"
+```
+
+You can also provide default values when destructuring in case the property is not present in the object:
+
+```javascript
+const { firstName, lastName, gender = "unknown" } = person;
+console.log(gender); // Output: "unknown"
+```
+
+Destructuring can be especially useful when working with function parameters to directly extract properties from objects:
+
+```javascript
+function displayFullName({ firstName, lastName }) {
+    console.log(`${firstName} ${lastName}`);
+}
+
+displayFullName(person); // Output: "John Doe"
+```
+
+In the case of arrays, you can ignore certain elements by using the comma `,` syntax:
+
+```javascript
+const [first, , third] = [1, 2, 3];
+console.log(first);  // Output: 1
+console.log(third);  // Output: 3
+```
+
+Destructuring offers a clean and concise way to extract values from arrays and objects, making your code more readable and expressive.
+
+120. ### What does the term Transpiling stand for?
+
+Transpiling, short for "source-to-source compilation" or "transforming and compiling," refers to the process of converting source code from one programming language to another while preserving its original functionality and behavior. This is commonly done to enable compatibility with different runtime environments, to take advantage of newer language features, or to improve code quality and performance.
+
+In the context of JavaScript, transpiling typically involves converting code written in a newer version of the language (such as ES6/ES2015 or later) into an older version (usually ES5) that is more widely supported by web browsers and other JavaScript environments. This allows developers to use modern language features while ensuring that their code remains functional in environments that do not yet support those features.
+
+For example, a common use case of JavaScript transpilation is converting ES6 code with arrow functions, classes, and template literals into ES5 code:
+
+ES6 Code:
+```javascript
+const greet = (name) => `Hello, ${name}!`;
+
+class Person {
+    constructor(name) {
+        this.name = name;
+    }
+}
+```
+
+Transpiled ES5 Code:
+```javascript
+var greet = function(name) {
+    return "Hello, " + name + "!";
+};
+
+function Person(name) {
+    this.name = name;
+}
+```
+
+Popular transpilers for JavaScript include Babel, which is widely used to convert modern JavaScript code into an older version for broader browser compatibility. Transpilers play a crucial role in the modern JavaScript ecosystem, enabling developers to write code using the latest language features while ensuring compatibility with a wide range of target environments.
+
+121. ### Explain Prototype Inheritance in JavaScript? 
+
+Prototype inheritance is a fundamental concept in JavaScript that allows objects to inherit properties and methods from other objects through their prototypes. In JavaScript, almost everything is an object, and objects can share common behavior and characteristics through prototype chains. This forms the basis of object-oriented programming in the language.
+
+Here's how prototype inheritance works:
+
+1. **Prototype Object:**
+   Every object in JavaScript has an associated prototype object. The prototype is an object that serves as a template or blueprint for the properties and methods that an object should inherit.
+
+2. **Prototype Chain:**
+   When you access a property or method on an object, JavaScript first checks if the object itself has that property or method. If not, it looks up the prototype chain to find the property or method in the prototype of the object. If the prototype also doesn't have the property, the search continues up the chain until the property is found or until the top-level prototype (`Object.prototype`) is reached.
+
+3. **Inheritance:**
+   When an object's prototype is set to another object, the first object inherits all the properties and methods of the second object. This establishes a parent-child relationship between the objects, allowing the child object to access the properties and methods of the parent object.
+
+Example of Prototype Inheritance:
+
+```javascript
+// Parent object constructor
+function Animal(name) {
+    this.name = name;
+}
+
+// Adding a method to the parent prototype
+Animal.prototype.sayHello = function() {
+    console.log(`Hello, I'm ${this.name}`);
+};
+
+// Child object constructor
+function Dog(name, breed) {
+    // Calling the parent constructor
+    Animal.call(this, name);
+    this.breed = breed;
+}
+
+// Setting the child prototype to an instance of the parent
+Dog.prototype = Object.create(Animal.prototype);
+
+// Adding a method to the child prototype
+Dog.prototype.bark = function() {
+    console.log("Woof woof!");
+};
+
+// Creating instances
+const myDog = new Dog("Buddy", "Golden Retriever");
+myDog.sayHello(); // Output: "Hello, I'm Buddy"
+myDog.bark();     // Output: "Woof woof!"
+```
+
+In this example:
+- `Animal` is the parent constructor, and `Dog` is the child constructor.
+- `Animal.prototype` defines the `sayHello` method.
+- `Dog.prototype` is set to an instance of `Animal.prototype`, establishing the prototype chain.
+- `myDog` is an instance of `Dog` that inherits both the `sayHello` method from `Animal.prototype` and the `bark` method from `Dog.prototype`.
+
+Prototype inheritance is a powerful mechanism that allows you to create reusable and structured code by sharing behavior between objects. It forms the basis of how objects are linked and can inherit properties and methods from each other in JavaScript.
